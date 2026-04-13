@@ -89,6 +89,11 @@
   padding: 12px 0;
   margin: 0;
   overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+  flex-wrap: nowrap;
 }
 
 .dropdown-menu::before {
@@ -132,8 +137,9 @@
 .dropdown-menu a,
 .dropdown-menu button,
 .dropdown-menu [role="menuitem"] {
-  display: block;
-  padding: 14px 20px;
+  display: inline-flex;
+  align-items: center;
+  padding: 14px 16px;
   color: #e2e8f0;
   text-decoration: none;
   font-size: 14px;
@@ -143,10 +149,10 @@
   border: none;
   background: none;
   cursor: pointer;
-  text-align: left;
-  width: 100%;
+  text-align: center;
   white-space: nowrap;
   user-select: none;
+  flex: 0 1 auto;
 }
 
 .dropdown-menu a:hover,
@@ -154,31 +160,25 @@
 .dropdown-menu [role="menuitem"]:hover {
   background: var(--dropdown-item-hover);
   color: #ffffff;
-  padding-left: 28px;
-  transform: translateX(4px);
 }
 
 .dropdown-menu a:active,
 .dropdown-menu button:active {
   background: var(--dropdown-item-active);
-  transform: translateX(6px);
 }
 
-/* Special styling for external links */
+/* Hyperclub link styling - no special arrow for external links */
+.dropdown-menu a.hyperclub-link {
+  color: inherit !important;
+  font-weight: 500 !important;
+}
+
+.dropdown-menu a.hyperclub-link::after {
+  content: none !important;
+}
+
 .dropdown-menu a[target="_blank"]::after {
-  content: '↗';
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 12px;
-  color: #9ca3af;
-  opacity: 0.7;
-}
-
-.dropdown-menu a[target="_blank"]:hover::after {
-  color: #00c2ff;
-  opacity: 1;
+  content: none !important;
 }
 
 /* Divider between menu sections */
@@ -199,6 +199,7 @@
     width: 90vw;
     max-width: 320px;
     min-width: 280px;
+    flex-direction: column;
   }
 
   .dropdown-menu::before,
@@ -211,15 +212,20 @@
     transform: translateX(-50%) translateY(10px) !important;
   }
 
+  .dropdown-menu a,
+  .dropdown-menu button {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+
   .dropdown-menu a:hover,
   .dropdown-menu button:hover {
     padding-left: 24px;
-    transform: translateX(2px);
   }
 
   .dropdown-menu a:active,
   .dropdown-menu button:active {
-    transform: translateX(4px);
   }
 }
 
