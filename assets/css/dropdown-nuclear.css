@@ -1,0 +1,171 @@
+/* ============================================================================
+   DROPDOWN NUCLEAR OPTION - RADICAL Z-INDEX FIX
+   Last Updated: April 12, 2026
+   
+   PROBLEM: Previous z-index fixes didn't work because parent elements
+   had position: relative creating stacking contexts that trapped dropdowns
+   
+   RADICAL SOLUTION: 
+   1. Remove ALL position: relative from header/nav (kills stacking context)
+   2. Use ONLY position: fixed for dropdowns
+   3. Make ALL page content use position: static (no stacking context)
+   4. Use extremely aggressive !important cascade
+   ============================================================================ */
+
+/* PHASE 1: DESTROY ALL STACKING CONTEXTS IN HEADER */
+/* Remove position: relative which creates stacking contexts */
+
+.site-header {
+  position: static !important;
+  z-index: auto !important;
+  overflow: visible !important;
+}
+
+.header-inner {
+  position: static !important;
+  z-index: auto !important;
+  overflow: visible !important;
+}
+
+.main-nav {
+  position: static !important;
+  z-index: auto !important;
+  overflow: visible !important;
+}
+
+.dropdown {
+  position: static !important;
+  z-index: auto !important;
+  overflow: visible !important;
+  display: inline-flex !important;
+}
+
+.dropdown-trigger {
+  position: static !important;
+  z-index: auto !important;
+  cursor: pointer !important;
+}
+
+/* PHASE 2: FREEZE ALL PAGE CONTENT WITH NO STACKING CONTEXT */
+/* Ensure NO element on page can block dropdowns */
+
+body {
+  position: static !important;
+}
+
+html {
+  position: static !important;
+}
+
+main, .page, .home-main, .page-main, .container, section,
+.hero, .hero-section, .video-section, .gallery, .gallery-section,
+.shop-container, .product-container, .product-grid, .product-list,
+.content, .content-wrapper, .page-wrapper, .page-content,
+.model-viewer, model-viewer, canvas, iframe,
+.card, .product-card, .category-card, .grid-item,
+.carousel, .carousel-container, div[class*="section"] {
+  position: static !important;
+  z-index: auto !important;
+}
+
+/* PHASE 3: DROPDOWN MENU - POSITION: FIXED ONLY */
+/* This MUST be above everything - fixed positioning escapes all containers */
+
+.dropdown-menu {
+  position: fixed !important;
+  z-index: 2147483647 !important; /* Maximum possible z-index */
+  overflow: visible !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  transition: visibility 0.2s ease, opacity 0.2s ease !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+}
+
+/* PHASE 4: SHOW DROPDOWN WHEN ACTIVE */
+
+.dropdown:hover .dropdown-menu,
+.dropdown.active .dropdown-menu,
+.dropdown-menu.visible {
+  visibility: visible !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+}
+
+/* PHASE 5: DROPDOWN ITEMS */
+
+.dropdown-menu a,
+.dropdown-menu button,
+.dropdown-menu [role="menuitem"] {
+  position: relative !important;
+  z-index: 2147483647 !important;
+  pointer-events: auto !important;
+  display: block !important;
+}
+
+/* PHASE 6: MOBILE SPECIFIC */
+@media (max-width: 1023px) {
+  .dropdown-menu {
+    position: fixed !important;
+    z-index: 2147483647 !important;
+  }
+  
+  .dropdown.active .dropdown-menu {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+}
+
+/* PHASE 7: OVERRIDE ALL CONFLICTING CSS */
+/* Kill any transform that might create stacking context */
+
+* {
+  transform: none !important;
+}
+
+/* But allow transforms on non-dropdown elements at lower z-index? No, just none. */
+
+/* PHASE 8: MODALS AND OVERLAYS (SHOULD NOT BLOCK DROPDOWNS) */
+
+.modal, .modal-overlay, .modal-content,
+.cookie-overlay, .cookie-modal, .overlay,
+[role="dialog"], .dialog {
+  z-index: 1000 !important; /* Lower than dropdown */
+}
+
+/* PHASE 9: SPECIAL CASE - AI WIDGETS */
+
+.ai-floating, .ai-panel-global, .ai-panel-voice,
+#ai-floating-global, .ai-widget-toggle-btn,
+.ai-widget-toggle, .alien-menu-container {
+  z-index: 500 !important; /* Much lower than dropdown */
+}
+
+/* PHASE 10: ENSURE PIXEL-PERFECT DROPDOWN LAYERING */
+
+.alien-dropdown-container {
+  z-index: auto !important;
+}
+
+#alienMenu {
+  z-index: 2147483646 !important; /* Just below main dropdown */
+}
+
+/* FORCE NO FILTERS OR OPACITY THAT CREATE STACKING CONTEXT */
+@media (max-width: 1023px) {
+  body {
+    filter: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* AGGRESSIVE HARDWARE ACCELERATION FOR DROPDOWN */
+.dropdown-menu {
+  will-change: auto !important;
+  backface-visibility: visible !important;
+  perspective: none !important;
+}

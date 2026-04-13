@@ -1,0 +1,271 @@
+/* ========================================
+   FOOTER ACTION BUTTONS - ENHANCED UI/UX
+   ======================================== */
+
+/* Container for footer action groups */
+.footer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Individual action button */
+.footer-action {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, rgba(0, 194, 255, 0.08) 0%, rgba(0, 194, 255, 0.02) 100%);
+  padding: 16px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  border: 2px solid rgba(0, 194, 255, 0.35);
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+/* Hover state */
+.footer-action:hover {
+  background: linear-gradient(135deg, rgba(0, 194, 255, 0.18) 0%, rgba(0, 194, 255, 0.08) 100%);
+  border-color: rgba(0, 194, 255, 0.7);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 194, 255, 0.2);
+}
+
+/* Focus state for accessibility */
+.footer-action:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 194, 255, 0.4), 0 12px 24px rgba(0, 194, 255, 0.2);
+  border-color: rgba(0, 194, 255, 0.9);
+}
+
+/* Active/pressed state */
+.footer-action:active {
+  transform: translateY(0px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 194, 255, 0.15);
+}
+
+/* Audio/visual feedback for mouse down */
+.footer-action:not(:focus-visible):active {
+  background: linear-gradient(135deg, rgba(0, 194, 255, 0.25) 0%, rgba(0, 194, 255, 0.12) 100%);
+}
+
+/* Title element */
+.footer-action__title {
+  font-weight: 700;
+  font-size: 0.95em;
+  margin-bottom: 6px;
+  display: block;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+/* Value element (phone, email, address) */
+.footer-action__value {
+  font-size: 0.85em;
+  color: #cbd5e1;
+  display: block;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.footer-action__value:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Hint element (Call us, Write to us, etc.) */
+.footer-action__hint {
+  font-size: 0.7em;
+  color: #00c2ff;
+  margin-top: 10px;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.footer-action:hover .footer-action__hint {
+  opacity: 1;
+}
+
+/* Special styling for office address buttons */
+.footer-actions--offices .footer-action {
+  border: 2px solid rgba(0, 194, 255, 0.4);
+}
+
+.footer-actions--offices .footer-action::after {
+  content: '→';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(0, 194, 255, 0.6);
+  font-size: 1.3em;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.footer-actions--offices .footer-action:hover::after {
+  opacity: 1;
+  color: rgba(0, 194, 255, 1);
+  transform: translateY(-50%) translateX(4px);
+}
+
+/* Contact buttons styling */
+.footer-actions--contact .footer-action {
+  border: 2px solid rgba(0, 194, 255, 0.3);
+}
+
+.footer-actions--contact .footer-action::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0, 194, 255, 0.8) 0%, rgba(0, 194, 255, 0.4) 100%);
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.footer-actions--contact .footer-action:hover::before {
+  opacity: 1;
+}
+
+/* Phone button special styling */
+.footer-action[href^="tel:"] {
+  border-left: 3px solid rgba(0, 194, 255, 0.5);
+}
+
+.footer-action[href^="tel:"]:hover {
+  border-left-color: rgba(0, 194, 255, 0.9);
+  box-shadow: -4px 12px 24px rgba(0, 194, 255, 0.15), 0 12px 24px rgba(0, 194, 255, 0.2);
+}
+
+/* Email button special styling */
+.footer-action[href^="mailto:"] {
+  border-left: 3px solid rgba(0, 194, 255, 0.5);
+}
+
+.footer-action[href^="mailto:"]:hover {
+  border-left-color: rgba(0, 194, 255, 0.9);
+  box-shadow: -4px 12px 24px rgba(0, 194, 255, 0.15), 0 12px 24px rgba(0, 194, 255, 0.2);
+}
+
+/* Maps link styling */
+.footer-action[target="_blank"] {
+  border: 2px solid rgba(0, 194, 255, 0.4);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+  .footer-action {
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+  .footer-action__title {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+  }
+
+  .footer-action__value {
+    font-size: 0.8em;
+  }
+
+  .footer-action__hint {
+    font-size: 0.65em;
+    margin-top: 8px;
+  }
+
+  /* Slightly larger touch targets on mobile */
+  .footer-action {
+    min-height: 56px;
+    justify-content: center;
+  }
+
+  .footer-actions--offices .footer-action::after {
+    font-size: 1.2em;
+    right: 14px;
+  }
+}
+
+/* Tablet responsiveness */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .footer-action {
+    padding: 15px;
+  }
+
+  .footer-action__title {
+    font-size: 0.92em;
+  }
+}
+
+/* High contrast mode improvements for accessibility */
+@media (prefers-contrast: more) {
+  .footer-action {
+    border: 3px solid rgba(0, 194, 255, 0.6);
+    background: linear-gradient(135deg, rgba(0, 194, 255, 0.15) 0%, rgba(0, 194, 255, 0.05) 100%);
+  }
+
+  .footer-action:hover {
+    border-color: rgba(0, 194, 255, 0.95);
+    background: linear-gradient(135deg, rgba(0, 194, 255, 0.25) 0%, rgba(0, 194, 255, 0.12) 100%);
+  }
+
+  .footer-action::after {
+    font-weight: 900;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .footer-action {
+    transition: none;
+  }
+
+  .footer-action:hover,
+  .footer-action:active,
+  .footer-action:focus {
+    transform: none;
+  }
+
+  .footer-action__hint {
+    transition: none;
+  }
+
+  .footer-actions--offices .footer-action::after {
+    transition: none;
+  }
+}
+
+/* Dark mode adjustments (if needed) */
+@media (prefers-color-scheme: dark) {
+  .footer-action {
+    background: linear-gradient(135deg, rgba(0, 194, 255, 0.1) 0%, rgba(0, 194, 255, 0.03) 100%);
+  }
+
+  .footer-action:hover {
+    background: linear-gradient(135deg, rgba(0, 194, 255, 0.2) 0%, rgba(0, 194, 255, 0.1) 100%);
+  }
+}
+
+/* Print styles */
+@media print {
+  .footer-action {
+    border: 1px solid #000;
+    background: none;
+    color: #000;
+    page-break-inside: avoid;
+  }
+
+  .footer-action::after,
+  .footer-action::before {
+    display: none;
+  }
+}

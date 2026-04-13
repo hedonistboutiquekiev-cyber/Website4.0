@@ -1,0 +1,156 @@
+/* ============================================================================
+   OPTIMIZED DROPDOWN MENU - Professional, Simple, Fast
+   ============================================================================ */
+
+/* Reset specific dropdown styles */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  z-index: auto;
+}
+
+.dropdown-trigger {
+  cursor: pointer;
+  user-select: none;
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-trigger:hover {
+  background-color: rgba(0, 194, 255, 0.1);
+  color: rgba(0, 194, 255, 1);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #07143a;
+  border: 1px solid rgba(0, 194, 255, 0.3);
+  border-radius: 8px;
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  padding: 8px 0;
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  margin-top: -1px;
+  backdrop-filter: none;
+}
+
+/* Avoid duplicated carets if another stylesheet injects an arrow via pseudo-elements */
+.dropdown-trigger::after {
+  content: none !important;
+}
+
+/* Show menu on hover (desktop) */
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Show menu when active class is added (mobile) */
+.dropdown.active .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Dropdown menu items */
+.dropdown-menu a,
+.dropdown-menu button {
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  text-align: left;
+  color: #e5e7eb;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, padding-left 0.15s ease;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu button:hover {
+  background-color: rgba(0, 194, 255, 0.15);
+  color: #ffffff;
+  padding-left: 24px;
+}
+
+.dropdown-menu a:active,
+.dropdown-menu button:active {
+  background-color: rgba(0, 194, 255, 0.25);
+}
+
+/* Hyperclub link special styling */
+.hyperclub-link {
+  color: #00c2ff !important;
+  font-weight: 600;
+}
+
+.hyperclub-link:hover {
+  background-color: rgba(0, 194, 255, 0.2) !important;
+}
+
+/* ============================================================================
+   MOBILE ADJUSTMENTS
+   ============================================================================ */
+
+@media (max-width: 1023px) {
+  .dropdown-menu {
+    position: fixed;
+    top: auto;
+    left: auto;
+    right: auto;
+    z-index: 500;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+  }
+
+  .dropdown-trigger {
+    padding: 10px 14px;
+    font-size: 16px;
+  }
+
+  .dropdown-menu a,
+  .dropdown-menu button {
+    padding: 14px 18px;
+  }
+}
+
+/* ============================================================================
+   Accessibility & Performance
+   ============================================================================ */
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .dropdown-menu,
+  .dropdown-menu a,
+  .dropdown-menu button,
+  .dropdown-trigger {
+    transition: none;
+  }
+}
+
+/* Focus states for keyboard navigation */
+.dropdown-trigger:focus,
+.dropdown-menu a:focus,
+.dropdown-menu button:focus {
+  outline: 2px solid #00c2ff;
+  outline-offset: 2px;
+}

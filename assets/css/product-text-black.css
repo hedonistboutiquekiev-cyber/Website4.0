@@ -1,0 +1,105 @@
+/* Override to force black text on product pages (exclude signup modal) */
+/* Applied with high specificity and !important to beat existing styles */
+html.product-text-black body,
+html.product-text-black body *:not(.signup-modal-overlay):not(.signup-modal-overlay *) {
+  color: #000000 !important;
+  fill: #000000 !important;
+  stroke: #000000 !important;
+}
+
+/* Keep header and footer text/icons white */
+html.product-text-black header,
+html.product-text-black footer,
+html.product-text-black header *,
+html.product-text-black footer *,
+html.product-text-black [data-include^="/header"],
+html.product-text-black [data-include^="/header"] *,
+html.product-text-black [data-include*="header"],
+html.product-text-black [data-include*="header"] *,
+html.product-text-black [data-include^="/footer"],
+html.product-text-black [data-include^="/footer"] *,
+html.product-text-black [data-include*="footer"],
+html.product-text-black [data-include*="footer"] * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+/* Ensure inputs and buttons text are also black */
+html.product-text-black input,
+html.product-text-black textarea,
+html.product-text-black select,
+html.product-text-black button {
+  color: #000000 !important;
+}
+
+/* Specific for svg icons */
+html.product-text-black svg {
+  fill: #000000 !important;
+  stroke: #000000 !important;
+}
+
+/* Make header and footer backgrounds light on product pages with separation */
+html.product-text-black .site-header,
+html.product-text-black header.site-header,
+html.product-text-black header {
+  background: #ffffff !important; /* White background */
+  background-color: #ffffff !important;
+  color: #000000 !important; /* Black text */
+  border-bottom: 1px solid rgba(0,0,0,0.1) !important; /* Subtle separator */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important; /* Subtle shadow */
+}
+
+html.product-text-black footer,
+html.product-text-black .footer,
+html.product-text-black .footer--tr,
+html.product-text-black .footer--en,
+html.product-text-black .footer--ru {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-top: 1px solid rgba(0,0,0,0.1) !important; /* Subtle separator */
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.05) !important; /* Subtle shadow above footer */
+}
+
+/* Ensure links in header/footer are black */
+html.product-text-black .site-header a,
+html.product-text-black footer a {
+  color: #000000 !important;
+}
+
+/* Ensure icons are not inverted (if any filter was applied) */
+html.product-text-black .site-header img,
+html.product-text-black footer img {
+  filter: none !important;
+}
+
+/* Force dark background on header/footer children too */
+html.product-text-black header *,
+html.product-text-black .site-header *,
+html.product-text-black footer *,
+html.product-text-black .footer * {
+  background-color: transparent !important;
+}
+
+/* Explicitly set dark background for header/footer container elements */
+html.product-text-black .header-inner,
+html.product-text-black .footer-grid,
+html.product-text-black .footer-grid--3 {
+  background: transparent !important;
+}
+
+/* Ensure links and icons in header/footer are visible */
+html.product-text-black .site-header a,
+html.product-text-black .site-header img,
+html.product-text-black footer a,
+html.product-text-black footer img,
+html.product-text-black .footer a,
+html.product-text-black .footer img {
+  color: #ffffff !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* If header uses CSS variable --header-bg, override it */
+html.product-text-black { --header-bg: #020617 !important; }

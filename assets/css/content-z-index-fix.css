@@ -1,0 +1,149 @@
+/* CONTENT Z-INDEX FIX
+   Date: April 12, 2026
+   Purpose: Ensure all page content has low z-index so dropdown menus are always visible
+   This file should be loaded AFTER all other page-specific CSS files
+*/
+
+/* Main page content - ensure it stays behind dropdown menus */
+body > .page-wrapper,
+body > main,
+body > .page,
+body > .home-main,
+body > .page-main,
+body > section,
+body > .container {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Video sections and backgrounds */
+body > .video-section,
+body > .hero,
+body > .hero-section,
+body > .background,
+body > .page-background,
+body > .shop-container,
+body > .product-container {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* 3D models and iframes - keep them on low z-index */
+.model-viewer,
+model-viewer,
+.three-d-model,
+.model-container,
+canvas:not([data-ignore-z-index]),
+iframe:not([data-ignore-z-index]) {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Product grids and cards */
+.product-grid,
+.product-list,
+.grid,
+.grid-item,
+.card,
+.product-card,
+.category-card,
+.carousel,
+.carousel-container {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Modals and overlays (should be lower than dropdown but higher than page content) */
+.modal,
+.modal-overlay,
+.modal-content,
+.cookie-overlay,
+.cookie-modal,
+.overlay,
+[role="dialog"] {
+  position: relative !important;
+  z-index: 8999 !important;
+}
+
+/* Ensure header stays at correct level */
+.site-header {
+  position: relative !important;
+  z-index: 100 !important;
+  overflow: visible !important;
+}
+
+.header-inner {
+  position: relative !important;
+  z-index: 100 !important;
+  overflow: visible !important;
+}
+
+/* Navigation and dropdown must be higher than content */
+.main-nav {
+  position: relative !important;
+  overflow: visible !important;
+  z-index: 101 !important;
+}
+
+.dropdown {
+  position: relative !important;
+  overflow: visible !important;
+  z-index: 102 !important;
+}
+
+/* Dropdown menus MUST be visible above everything except modals */
+.dropdown-menu {
+  z-index: 10000 !important;
+  overflow: visible !important;
+}
+
+.dropdown-menu.visible,
+.dropdown:hover .dropdown-menu,
+.dropdown.active .dropdown-menu {
+  z-index: 10000 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* Dropdown menu items */
+.dropdown-menu a,
+.dropdown-menu button {
+  position: relative !important;
+  z-index: 10000 !important;
+  pointer-events: auto !important;
+}
+
+/* Floating widgets (should be lower than dropdown but higher than page content) */
+.ai-floating,
+.ai-panel-global,
+.ai-panel-voice,
+.ai-widget-toggle-btn,
+.alien-menu-container,
+#ai-floating-global {
+  position: relative !important;
+  z-index: 8998 !important;
+}
+
+/* Specific page content sections */
+.page-main,
+.content-wrapper,
+.main-content,
+main,
+.container-main {
+  position: relative !important;
+  z-index: 1 !important;
+  overflow: visible !important;
+}
+
+/* Ensure page wrappers don't create problematic stacking contexts */
+.page-wrapper {
+  z-index: auto !important;
+}
+
+/* Footer should be low */
+footer,
+.footer,
+.page-footer {
+  position: relative !important;
+  z-index: 1 !important;
+}

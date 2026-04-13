@@ -1,0 +1,194 @@
+/* =============================================================
+   ULTIMATE DROPDOWN FIX - Final Solution for Visibility Issues
+   Last Updated: April 12, 2026
+   
+   PROBLEM: Dropdown menus were hidden behind page content due to 
+   incorrect z-index hierarchy and stacking contexts
+   
+   SOLUTION: Drastically reduce header z-index and ensure dropdown 
+   menus are absolutely positioned above everything
+   ============================================================== */
+
+/* CRITICAL FIX: Reduce header z-index to allow dropdowns to escape */
+.site-header {
+  z-index: 50 !important;
+}
+
+.header-inner {
+  z-index: 50 !important;
+  overflow: visible !important;
+}
+
+/* Main navigation */
+.main-nav {
+  position: relative !important;
+  overflow: visible !important;
+  z-index: 51 !important;
+}
+
+/* Dropdown containers */
+.dropdown {
+  position: relative !important;
+  overflow: visible !important;
+  z-index: 51 !important;
+}
+
+.dropdown-trigger {
+  position: relative !important;
+  z-index: 51 !important;
+  cursor: pointer !important;
+}
+
+/* CRITICAL: Dropdown menu MUST be very high z-index */
+.dropdown-menu {
+  position: fixed !important;
+  z-index: 99999 !important;
+  overflow: visible !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  transition: visibility 0.2s, opacity 0.2s !important;
+}
+
+/* Desktop positioning (1024px and above) */
+@media (min-width: 1024px) {
+  .dropdown-menu {
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    transform: none !important;
+  }
+}
+
+/* Mobile positioning (below 1024px) */
+@media (max-width: 1023px) {
+  .dropdown-menu {
+    position: fixed !important;
+    top: auto !important;
+    left: auto !important;
+    /* Position will be calculated by JavaScript */
+    transform: none !important;
+  }
+}
+
+/* Show dropdown when active or on hover */
+.dropdown:hover .dropdown-menu,
+.dropdown.active .dropdown-menu {
+  visibility: visible !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+}
+
+/* Dropdown menu items */
+.dropdown-menu a,
+.dropdown-menu button,
+.dropdown-menu [role="menuitem"] {
+  position: relative !important;
+  z-index: 99999 !important;
+  pointer-events: auto !important;
+  display: block !important;
+}
+
+/* Ensure all content areas have lower z-index than dropdown */
+main, .page, .page-main, .home-main,
+.content, .container, section,
+.hero, .video-section, .gallery,
+.shop-container, .product-container {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* 3D models and canvas - keep low */
+.model-viewer, model-viewer, canvas, iframe {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Important: Remove transform from dropdown to prevent stacking context */
+.dropdown, .dropdown-menu {
+  transform: none !important;
+}
+
+/* Alien menu (account menu) should be lower than main dropdown */
+.alien-dropdown-container {
+  position: relative !important;
+  z-index: 52 !important;
+}
+
+#alienMenu {
+  z-index: 99998 !important;
+}
+
+/* Cookie overlay - lower than dropdown */
+.cookie-overlay-fix, #cookie-overlay {
+  z-index: 8999 !important;
+}
+
+.cookie-modal {
+  z-index: 9000 !important;
+}
+
+/* AI widgets - lower than dropdown */
+.ai-floating, .ai-panel-global, .ai-panel-voice,
+#ai-floating-global, .ai-widget-toggle-btn,
+.ai-widget-toggle {
+  z-index: 8000 !important;
+}
+
+/* Mobile overlay behind dropdown menu */
+@media (max-width: 1023px) {
+  .dropdown.active::after {
+    content: '' !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.4) !important;
+    z-index: 99998 !important;
+    pointer-events: auto !important;
+  }
+}
+
+/* Ensure body and html don't interfere */
+html, body {
+  position: relative;
+  overflow-x: visible !important;
+}
+
+/* Safety: Disable any problematic CSS that might hide dropdown */
+.dropdown-menu {
+  clip: auto !important;
+  clip-path: none !important;
+  overflow: visible !important;
+  max-height: none !important;
+  max-width: none !important;
+}
+
+/* Force shop CSS and other conflict resolvers */
+.site-header .dropdown-menu {
+  z-index: 99999 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+
+.site-header .dropdown:hover .dropdown-menu,
+.site-header .dropdown.active .dropdown-menu {
+  visibility: visible !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+}
+
+/* Override any CSS that might be hiding the dropdown */
+.dropdown-menu * {
+  z-index: 99999 !important;
+}
+
+/* Important media query override for dropdown positioning on mobile */
+@media (max-width: 1023px) {
+  .dropdown-menu {
+    position: fixed !important;
+    z-index: 99999 !important;
+  }
+}

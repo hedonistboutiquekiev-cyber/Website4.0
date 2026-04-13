@@ -1,0 +1,84 @@
+/* ============================================================================
+   DROPDOWN PORTAL CSS - Styles for portal-moved dropdown menus
+   Last Updated: April 12, 2026
+   ============================================================================ */
+
+/* Portal dropdown menu clone in body */
+.dropdown-menu[data-portal-clone="true"] {
+  position: fixed !important;
+  z-index: 2147483647 !important;
+  background: #111827 !important;
+  border: 1px solid #1e293b !important;
+  border-radius: 8px !important;
+  min-width: 200px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8) !important;
+  padding: 8px 0 !important;
+  margin-top: 5px !important;
+  display: none !important;
+  flex-direction: column !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.2s ease, visibility 0.2s ease !important;
+  transform: none !important;
+  overflow: visible !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+}
+
+/* When active/visible */
+.dropdown-menu[data-portal-clone="true"].active,
+.dropdown-menu[data-portal-clone="true"].visible {
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  display: flex !important;
+}
+
+/* Portal menu items */
+.dropdown-menu[data-portal-clone="true"] a,
+.dropdown-menu[data-portal-clone="true"] button {
+  display: block !important;
+  padding: 12px 20px !important;
+  color: #e2e8f0 !important;
+  text-decoration: none !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  background: transparent !important;
+  border: none !important;
+  text-align: left !important;
+  width: 100% !important;
+}
+
+.dropdown-menu[data-portal-clone="true"] a:hover,
+.dropdown-menu[data-portal-clone="true"] button:hover {
+  background: rgba(0, 194, 255, 0.1) !important;
+  color: #ffffff !important;
+  padding-left: 24px !important;
+}
+
+/* Remove original menu styling to avoid conflicts */
+.dropdown > .dropdown-menu {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Ensure no overflow hidden can clip portal */
+body {
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+}
+
+/* Force visibility for portal elements */
+.dropdown-menu[data-portal-clone="true"] {
+  all: revert !important;
+  position: fixed !important;
+  z-index: 2147483647 !important;
+}
