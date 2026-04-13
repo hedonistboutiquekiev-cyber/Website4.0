@@ -20,6 +20,18 @@
   z-index: 51 !important;
 }
 
+/* Invisible hover zone to prevent menu collapse */
+.dropdown::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: -15px;
+  right: -15px;
+  height: 35px;
+  pointer-events: auto;
+  z-index: 99998;
+}
+
 /* Dropdown trigger button */
 .dropdown-trigger {
   position: relative;
@@ -71,7 +83,7 @@
 /* Dropdown menu */
 .dropdown-menu {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 27px);
   left: 50%;
   transform: translateX(-50%) translateY(-10px);
   background: var(--dropdown-bg);
@@ -126,7 +138,8 @@
 
 /* Show dropdown on hover/active */
 .dropdown:hover .dropdown-menu,
-.dropdown.active .dropdown-menu {
+.dropdown.active .dropdown-menu,
+.dropdown-menu:hover {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -153,6 +166,7 @@
   white-space: nowrap;
   user-select: none;
   flex: 0 1 auto;
+  pointer-events: auto;
 }
 
 .dropdown-menu a:hover,

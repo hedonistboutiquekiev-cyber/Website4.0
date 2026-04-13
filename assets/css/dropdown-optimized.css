@@ -3,10 +3,23 @@
    ============================================================================ */
 
 /* Reset specific dropdown styles */
+/* Dropdown container with safe hover zone */
 .dropdown {
   position: relative;
   display: inline-block;
   z-index: auto;
+}
+
+/* Invisible hover zone to prevent menu collapse */
+.dropdown::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: -10px;
+  right: -10px;
+  height: 30px;
+  pointer-events: auto;
+  z-index: 999;
 }
 
 .dropdown-trigger {
@@ -27,7 +40,8 @@
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  left: 0;
+  left: -10px;
+  right: -10px;
   background: #07143a;
   border: 1px solid rgba(0, 194, 255, 0.3);
   border-radius: 8px;
@@ -42,8 +56,8 @@
   transform: translateY(-8px);
   transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-  z-index: 1000;
-  margin-top: -1px;
+  z-index: 1001;
+  margin-top: 20px;
   backdrop-filter: none;
   display: flex;
   flex-direction: row;
@@ -63,6 +77,14 @@
   visibility: visible;
   pointer-events: auto;
   transform: translateY(0);
+}
+
+/* Keep menu open when hovering over buffer zone */
+.dropdown-menu:hover {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) !important;
 }
 
 /* Show menu when active class is added (mobile) */
@@ -90,6 +112,7 @@
   transition: background-color 0.15s ease, color 0.15s ease;
   white-space: nowrap;
   flex: 0 1 auto;
+  pointer-events: auto;
 }
 
 .dropdown-menu a:hover,
