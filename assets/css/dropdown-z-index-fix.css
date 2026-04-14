@@ -120,17 +120,22 @@ canvas, iframe {
     transform: translate(-50%, -50%) !important;
   }
   
-  /* Mobile overlay for dropdown */
+  /* Mobile overlay for dropdown - REMOVED
+     This overlay produced a dimming layer above dropdown items on some devices.
+     We neutralize the pseudo-element to avoid blocking clicks while keeping selector.
+  */
   .dropdown.active::before {
-    content: '' !important;
+    content: none !important;
+    display: none !important;
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    background: rgba(0, 0, 0, 0.6) !important;
-    z-index: 999998 !important;
-    backdrop-filter: blur(2px) !important;
+    background: transparent !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    backdrop-filter: none !important;
   }
 }
 
@@ -306,9 +311,12 @@ main, .page, .home-main, .page-main, .container, section {
     position: fixed !important;
   }
   
-  /* Overlay for mobile */
+  /* Overlay for mobile neutralized */
   .dropdown.active::before {
-    z-index: 999998 !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    display: none !important;
+    content: none !important;
   }
 }
 

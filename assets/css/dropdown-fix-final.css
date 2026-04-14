@@ -135,18 +135,21 @@ main, .page, .page-main, .home-main,
   z-index: 8000 !important;
 }
 
-/* Mobile overlay behind dropdown menu */
+/* Mobile overlay behind dropdown menu - REMOVED
+   Overlay dimming interfered with dropdown touch/clicks on some devices.
+   Keep rule present but neutralized so other rules referencing the selector won't break. */
 @media (max-width: 1023px) {
   .dropdown.active::after {
-    content: '' !important;
+    content: none !important;
+    display: none !important;
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    background: rgba(0, 0, 0, 0.4) !important;
-    z-index: 99998 !important;
-    pointer-events: auto !important;
+    background: transparent !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
   }
 }
 
