@@ -4,8 +4,8 @@
    =========================================== */
 
 :root {
-  --dropdown-bg: rgba(2, 6, 23, 0.98);
-  --dropdown-border: rgba(0, 194, 255, 0.2);
+  --dropdown-bg: #001a33;
+  --dropdown-border: #003366;
   --dropdown-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
   --dropdown-item-hover: rgba(0, 194, 255, 0.15);
   --dropdown-item-active: rgba(0, 194, 255, 0.25);
@@ -86,10 +86,9 @@
   top: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%) translateY(-10px);
-  background: linear-gradient(180deg, rgba(2, 6, 23, 0.95) 0%, rgba(7, 20, 58, 0.9) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(0, 194, 255, 0.3);
+  background: linear-gradient(180deg, #001a33 0%, #003366 100%);
+  opacity: 1 !important;
+  border: 1px solid #003366;
   border-radius: var(--dropdown-radius);
   min-width: 240px;
   z-index: 99999 !important;
@@ -252,7 +251,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     z-index: 1500 !important;
-    background: linear-gradient(135deg, rgba(2, 6, 23, 0.97) 0%, rgba(13, 42, 87, 0.95) 100%);
+    background: linear-gradient(135deg, #001a33 0%, #003366 100%);
     border-radius: 0;
     border: none;
     border-top: 2px solid rgba(0, 194, 255, 0.4);
@@ -395,6 +394,81 @@
   .dropdown-menu {
     --dropdown-bg: rgba(2, 6, 23, 0.98);
     --dropdown-border: rgba(0, 194, 255, 0.3);
+  }
+}
+
+/* === Desktop-specific flyouts for header dropdowns === */
+@media (min-width: 1024px) {
+  /* Hizmetler: top edge directly under trigger, right edge shifted 25px right */
+  .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu {
+    left: auto !important;
+    right: -25px !important;
+    top: 100% !important;
+    transform: none !important;
+    transform-origin: top right !important;
+    min-width: auto !important;
+    width: auto !important;
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 8px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
+  }
+
+  .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu::before,
+  .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu::after {
+    display: none !important;
+  }
+
+  .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu a,
+  .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu button {
+    width: auto !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    padding: 10px 14px !important;
+    pointer-events: auto !important;
+  }
+
+  /* Hakkimizda: top edge directly under trigger, left edge shifted 25px left */
+  .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu {
+    left: -25px !important;
+    right: auto !important;
+    top: 100% !important;
+    transform: none !important;
+    transform-origin: top left !important;
+    min-width: auto !important;
+    width: auto !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 8px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
+  }
+
+  .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu::before,
+  .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu::after {
+    display: none !important;
+  }
+
+  .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu a,
+  .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu button {
+    width: auto !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    padding: 10px 14px !important;
+    pointer-events: auto !important;
+  }
+
+  /* Ensure all header dropdown menu items are clickable and above other elements */
+  .main-nav .dropdown .dropdown-menu a,
+  .main-nav .dropdown .dropdown-menu button,
+  .main-nav .dropdown .dropdown-menu [role="menuitem"] {
+    pointer-events: auto !important;
+    z-index: 10040 !important;
   }
 }
 

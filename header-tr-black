@@ -33,7 +33,7 @@
     <!-- Navigation -->
     <nav class="main-nav">
       <div class="dropdown">
-        <a href="/hizmetler.html" class="dropdown-trigger" aria-expanded="false">HİZMETLER ▾</a>
+        <a href="/hizmetler.html" class="dropdown-trigger" aria-expanded="false">HİZMETLER</a>
         <div class="dropdown-menu">
           <a href="/hizmetler.html">HİZMETLER</a>
           <a href="/kupsat.html">ÜRÜNLERİМİЗ</a>
@@ -45,14 +45,14 @@
       </div>
       <a href="/shop.html">MAĞAZA</a>
       <div class="dropdown">
-        <a href="/albamen.html" class="dropdown-trigger" aria-expanded="false">ALBAMEN ▾</a>
+        <a href="/albamen.html" class="dropdown-trigger" aria-expanded="false">ALBAMEN</a>
         <div class="dropdown-menu">
           <a href="/albamen.html">ALBAMEN</a>
           <a href="/atlas.html">ATLAS</a>
         </div>
       </div>
       <div class="dropdown">
-        <a href="/hakkimizda.html" class="dropdown-trigger" aria-expanded="false">HAKKIMIZDA ▾</a>
+        <a href="/hakkimizda.html" class="dropdown-trigger" aria-expanded="false">HAKKIMIZDA</a>
         <div class="dropdown-menu">
           <a href="/hakkimizda.html">HAKKIMIZDA</a>
           <a href="/basindabiz.html">BASINDA BİZ</a>

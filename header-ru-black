@@ -33,7 +33,7 @@
     <!-- Navigation -->
     <nav class="main-nav">
       <div class="dropdown">
-        <a href="/rus/hizmetler.html" class="dropdown-trigger" aria-expanded="false">УСЛУГИ ▾</a>
+        <a href="/rus/hizmetler.html" class="dropdown-trigger" aria-expanded="false">УСЛУГИ</a>
         <div class="dropdown-menu">
           <a href="/rus/hizmetler.html">УСЛУГИ</a>
           <a href="/rus/kupsat.html">ПРОДУКТЫ</a>
@@ -43,14 +43,14 @@
       </div>
       <a href="/rus/shop.html">МАГАЗИН</a>
       <div class="dropdown">
-        <a href="/rus/albamen.html" class="dropdown-trigger" aria-expanded="false">ALBAMAN ▾</a>
+        <a href="/rus/albamen.html" class="dropdown-trigger" aria-expanded="false">ALBAMAN</a>
         <div class="dropdown-menu">
           <a href="/rus/albamen.html">ALBAMAN</a>
           <a href="/rus/atlas.html">АТЛАС</a>
         </div>
       </div>
       <div class="dropdown">
-        <a href="/rus/hakkimizda.html" class="dropdown-trigger" aria-expanded="false">О НАС ▾</a>
+        <a href="/rus/hakkimizda.html" class="dropdown-trigger" aria-expanded="false">О НАС</a>
         <div class="dropdown-menu">
           <a href="/rus/hakkimizda.html">О НАС</a>
           <a href="/rus/basindabiz.html">ПРЕССА</a>

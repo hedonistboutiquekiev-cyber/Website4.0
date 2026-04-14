@@ -44,8 +44,8 @@
   top: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%) translateY(-8px);
-  background: linear-gradient(180deg, rgba(7, 20, 58, 0.95) 0%, rgba(7, 20, 58, 0.9) 100%);
-  border: 1px solid rgba(0, 194, 255, 0.3);
+  background: linear-gradient(180deg, #001a33 0%, #003366 100%);
+  border: 1px solid #003366;
   border-radius: 8px;
   border-top: none;
   border-top-left-radius: 0;
@@ -60,7 +60,7 @@
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.7);
   z-index: 1001;
   margin-top: 8px;
-  backdrop-filter: blur(8px);
+  /* opaque gradient used, no backdrop filter for contrast */
   display: grid;
   grid-template-columns: repeat(2, minmax(140px, 1fr));
   gap: 6px;
@@ -70,6 +70,87 @@
 @media (min-width: 1024px) {
   .dropdown::after {
     display: block;
+  }
+}
+
+/* Desktop-specific flyouts: match all language variants using href$= selector */
+@media (min-width: 1024px) {
+  .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu {
+    left: auto;
+    right: -25px;
+    top: 100%;
+    transform: none;
+    transform-origin: top right;
+    min-width: auto;
+    width: auto;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    background: linear-gradient(180deg, #001a33 0%, #003366 100%);
+    border: 1px solid #003366;
+    opacity: 1;
+    z-index: 1001;
+  }
+
+  .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu::before,
+  .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu::after {
+    display: none;
+  }
+
+  .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu a,
+  .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu button {
+    width: auto;
+    white-space: nowrap;
+    display: inline-flex;
+    padding: 10px 14px;
+    pointer-events: auto !important;
+  }
+
+  .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu {
+    left: -25px;
+    right: auto;
+    top: 100%;
+    transform: none;
+    transform-origin: top left;
+    min-width: auto;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    background: linear-gradient(180deg, #001a33 0%, #003366 100%);
+    border: 1px solid #003366;
+    opacity: 1;
+    z-index: 1001;
+  }
+
+  .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu::before,
+  .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu::after {
+    display: none;
+  }
+
+  .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu a,
+  .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu button {
+    width: auto;
+    white-space: nowrap;
+    display: inline-flex;
+    padding: 10px 14px;
+    pointer-events: auto !important;
+  }
+
+  /* Ensure header dropdown items are clickable */
+  .main-nav .dropdown .dropdown-menu a,
+  .main-nav .dropdown .dropdown-menu button,
+  .main-nav .dropdown .dropdown-menu [role="menuitem"] {
+    pointer-events: auto !important;
+    z-index: 10040 !important;
   }
 }
 
@@ -194,14 +275,14 @@
     flex-wrap: wrap;
     width: 100vw;
     min-width: 100vw;
-    background: linear-gradient(135deg, rgba(7, 20, 58, 0.97) 0%, rgba(13, 42, 87, 0.95) 100%);
+    background: linear-gradient(135deg, #001a33 0%, #003366 100%);
     border-radius: 0;
     border: none;
     border-top: 2px solid rgba(0, 194, 255, 0.4);
     border-bottom: 1px solid rgba(0, 194, 255, 0.2);
     padding: 14px 10px;
     margin: 0;
-    backdrop-filter: blur(15px);
+    /* opaque gradient used for clear contrast */
     gap: 0;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
     transform: translateY(-100%) scaleY(0.95);
