@@ -145,6 +145,41 @@
     pointer-events: auto !important;
   }
 
+  /* ALBAMEN: smaller vertical dropdown under trigger */
+  .main-nav .dropdown > .dropdown-trigger[href$="albamen.html"] + .dropdown-menu {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%;
+    min-width: 160px;
+    width: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    background: linear-gradient(180deg, #001a33 0%, #003366 100%);
+    border: 1px solid #003366;
+    opacity: 1;
+    z-index: 10050;
+  }
+
+  .main-nav .dropdown > .dropdown-trigger[href$="albamen.html"] + .dropdown-menu::before,
+  .main-nav .dropdown > .dropdown-trigger[href$="albamen.html"] + .dropdown-menu::after {
+    display: none;
+  }
+
+  .main-nav .dropdown > .dropdown-trigger[href$="albamen.html"] + .dropdown-menu a,
+  .main-nav .dropdown > .dropdown-trigger[href$="albamen.html"] + .dropdown-menu button {
+    width: auto;
+    white-space: nowrap;
+    display: inline-flex;
+    padding: 8px 12px;
+    font-size: 13px;
+    pointer-events: auto !important;
+    z-index: 10050 !important;
+  }
+
   /* Ensure header dropdown items are clickable */
   .main-nav .dropdown .dropdown-menu a,
   .main-nav .dropdown .dropdown-menu button,

@@ -2,7 +2,7 @@ import { chromium } from 'playwright';
 
 (async () => {
   const browser = await chromium.launch({ headless: true });
-  const targets = ['hizmetler.html', 'hakkimizda.html'];
+  const targets = ['hizmetler.html', 'hakkimizda.html', 'albamen.html'];
 
   async function testDropdownOnPage(page, pageUrl) {
     console.log('Opening', pageUrl);
