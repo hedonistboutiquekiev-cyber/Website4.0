@@ -10,7 +10,7 @@
   z-index: auto;
 }
 
-/* Invisible hover zone to prevent menu collapse */
+/* Invisible hover zone to prevent menu collapse - desktop only */
 .dropdown::after {
   content: '';
   position: absolute;
@@ -20,6 +20,8 @@
   height: 30px;
   pointer-events: auto;
   z-index: 999;
+  background: transparent;
+  display: none;
 }
 
 .dropdown-trigger {
@@ -66,9 +68,10 @@
   flex-wrap: nowrap;
 }
 
-/* Avoid duplicated carets if another stylesheet injects an arrow via pseudo-elements */
-.dropdown-trigger::after {
-  content: none !important;
+@media (min-width: 1024px) {
+  .dropdown::after {
+    display: block;
+  }
 }
 
 /* Show menu on hover (desktop) */
@@ -95,7 +98,7 @@
   transform: translateY(0);
 }
 
-/* Dropdown menu items */
+/* Dropdown menu items - fully clickable */
 .dropdown-menu a,
 .dropdown-menu button {
   display: inline-flex;
@@ -112,9 +115,10 @@
   transition: all 0.2s ease;
   white-space: nowrap;
   flex: 0 1 auto;
-  pointer-events: auto;
+  pointer-events: auto !important;
   position: relative;
   border-radius: 6px;
+  user-select: none;
 }
 
 .dropdown-menu a::before,
@@ -220,6 +224,7 @@
     border-radius: 6px;
     margin: 4px 0;
     transition: all 0.2s ease;
+    pointer-events: auto !important;
   }
 
   .dropdown-menu a:hover,
