@@ -1,21 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru" class="product-text-black">
 <head>
-  <!-- Универсальный favicon-блок -->
-  <link rel="icon" type="image/png" href="/assets/icons/AlbaLogo.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="/assets/icons/AlbaLogo.png" sizes="32x32">
-  <link rel="apple-touch-icon" href="/assets/icons/AlbaLogo.png" sizes="180x180">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#020617">
-  <meta name="msapplication-TileColor" content="#020617">
-  <meta name="msapplication-TileImage" content="/favicon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Katlaç/Sonsuz Küp – Alba Space</title>
+  <title>Katlaç/Sonsuz Küp – AlbaSpace</title>
   
   <!-- Ваши оригинальные стили (для хедера и футера) -->
   <link rel="stylesheet" href="/assets/css/site.css">
-  <link rel="stylesheet" href="/assets/css/fix-layout.css">
   <link rel="stylesheet" href="/assets/css/product-overrides.css">
   
   <!-- Tailwind и шрифты для нового дизайна страницы -->
@@ -170,7 +161,7 @@
 </head>
 <body>
   <!-- Ваш оригинальный хедер -->
-  <div data-include="/header-ru-black"></div>
+  <div data-include="/header-ru.html"></div>
 
   
 
@@ -220,10 +211,10 @@
         
         <!-- Payment Icons -->
         <div class="flex flex-wrap items-center gap-6 payment-icons mb-6">
+          <img src="/assets/icons/iyzico_tr.png" alt="iyzico">
           <img src="/assets/icons/mastercard.png" alt="mastercard">
           <img src="/assets/icons/visa.png" alt="visa">
-        </div>
-        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+        </div><div class="flex flex-col sm:flex-row gap-4 mb-8">
           <!-- Выбор количества -->
           <div class="flex items-center bg-gray-900 border border-gray-800 rounded-2xl p-1 h-14" data-qty>
             <button class="w-12 h-full flex items-center justify-center text-xl hover:text-white transition" onclick="updateQty(-1)">&minus;</button>
@@ -262,7 +253,7 @@
   </main>
 
   <!-- Ваш оригинальный футер -->
-  <div data-include="/footer-ru-black"></div>
+  <div data-include="/footer-ru.html"></div>
 
   <script>
     // Логика галереи

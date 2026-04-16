@@ -173,6 +173,59 @@
         padding-left: 24px;
     }
 
+    /* Preserve services/about desktop row flyouts */
+    @media (min-width: 1024px) {
+        .header-inner .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu {
+            left: auto !important;
+            right: -25px !important;
+            top: 100% !important;
+            transform: none !important;
+            display: flex !important;
+            flex-direction: row-reverse !important;
+            align-items: center !important;
+            flex-wrap: nowrap !important;
+            gap: 8px !important;
+            padding: 8px !important;
+            width: auto !important;
+            min-width: auto !important;
+            background: linear-gradient(180deg, #001a33 0%, #003366 100%) !important;
+            border: 1px solid #003366 !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
+            border-radius: 8px !important;
+        }
+
+        .header-inner .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu {
+            left: -25px !important;
+            right: auto !important;
+            top: 100% !important;
+            transform: none !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            flex-wrap: nowrap !important;
+            gap: 8px !important;
+            padding: 8px !important;
+            width: auto !important;
+            min-width: auto !important;
+            background: linear-gradient(180deg, #001a33 0%, #003366 100%) !important;
+            border: 1px solid #003366 !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
+            border-radius: 8px !important;
+        }
+
+        .header-inner .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu a,
+        .header-inner .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu button,
+        .header-inner .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu a,
+        .header-inner .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu button {
+            width: auto !important;
+            min-width: 0 !important;
+            display: inline-flex !important;
+            justify-content: center !important;
+            white-space: nowrap !important;
+            padding: 10px 14px !important;
+        }
+    }
+
     /* SOCIAL */
     .header-social {
         order: 4 !important;
