@@ -1035,7 +1035,6 @@ function enhanceFooter(root) {
   const emailHint = isEnglish ? 'Write to us' : 'Bize yazın';
   const mapHint = isEnglish ? 'Tap to open map' : 'Haritayı açmak için докунун';
   const merkezBlock = extractSection(rawAddrText, headOfficeRegex, branchOfficeRegex);
-  const adanaBlock = extractSection(rawAddrText, branchOfficeRegex, null);
   const mailAnchors = footer.querySelectorAll('a[href^="mailto:"]');
   mailAnchors.forEach((el) => el.remove());
   const contactPanel = document.createElement('div');
@@ -1051,9 +1050,7 @@ function enhanceFooter(root) {
   emailBtn.innerHTML = `<div class="action-row"><span class="action-icon">✉</span><span class="action-text">hello@albaspace.com.tr</span></div><div class="action-hint alba-blink">${emailHint}</div>`;
   contactPanel.appendChild(emailBtn);
   const map1 = buildMapButton(merkezBlock, mapHint);
-  const map2 = buildMapButton(adanaBlock, mapHint);
   if (map1) contactPanel.appendChild(map1);
-  if (map2) contactPanel.appendChild(map2);
   addressContainer.innerHTML = '';
   addressContainer.style.display = 'flex';
   addressContainer.style.flexDirection = 'column';
