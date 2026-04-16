@@ -6,8 +6,6 @@ const trProducts = [
   { title: "Hoodie", price: "980.00 TL", image: "/assets/images/hoodie1.png", link: "product-hoodie1.html" },
   { title: "Alba Space Pullover Hoodie", price: "980.00 TL", image: "/assets/images/hoodie.png", link: "product-hoodie.html" },
   { title: "Katlaç/Sonsuz Küp", price: "120.00 TL", image: "/assets/images/hat.png", link: "product-hat.html" },
-  { title: "Alba Space Logo Model", price: "$100.00", image: "/assets/images/albaspacelogo3dmodel.png", link: "product-dragon.html" },
-  { title: "Alba Space LOGO 3D Model", price: "300.00 TL", image: "/assets/images/albaspacelogo3dmodel.png", link: "product-albaspacelogo.html" },
   { title: "Kitap PDF", price: "160.00 TL", image: "/assets/images/albemanvelara1.jpg", link: "product-albamenvelara1.html" },
   { title: "Kitap", price: "1000.00 TL", image: "/assets/images/albamenvelara.jpg", link: "product-albamenvelara.html" }
 ];
@@ -19,7 +17,6 @@ const enProducts = [
   { title: "Hoodie", price: "980.00 TL", image: "/assets/images/hoodie1.png", link: "/eng/product-hoodie1.html" },
   { title: "Alba Space Pullover Hoodie", price: "980.00 TL", image: "/assets/images/hoodie.png", link: "/eng/product-hoodie.html" },
   { title: "Katlaç/Sonsuz Küp", price: "120.00 TL", image: "/assets/images/hat.png", link: "/eng/product-hat.html" },
-  { title: "Alba Space LOGO 3D Model", price: "$30.00", image: "/eng/assets/images/albaspace.jpg", link: "/eng/product-albaspacelogo.html" },
   { title: "Book PDF", price: "160.00 TL", image: "/assets/images/albemanvelara1.jpg", link: "/eng/product-albemanvelara1.html" },
   { title: "Book", price: "1000.00 TL", image: "/assets/images/albamenvelara.jpg", link: "/eng/product-albamenvelara.html" }
 ];
@@ -31,8 +28,6 @@ const ruProducts = [
   { title: "Худи", price: "980.00 TL", image: "/assets/images/hoodie1.png", link: "/rus/product-hoodie1.html" },
   { title: "Худи Alba Space", price: "980.00 TL", image: "/assets/images/hoodie.png", link: "/rus/product-hoodie.html" },
   { title: "Бесконечный куб", price: "120.00 TL", image: "/assets/images/hat.png", link: "/rus/product-hat.html" },
-  { title: "3D модель Alba Space Logo", price: "$100.00", image: "/assets/images/albaspacelogo3dmodel.png", link: "/rus/product-dragon.html" },
-  { title: "3D модель Alba Space LOGO", price: "300.00 TL", image: "/assets/images/albaspacelogo3dmodel.png", link: "/rus/product-albaspacelogo.html" },
   { title: "Книга PDF", price: "160.00 TL", image: "/assets/images/albemanvelara1.jpg", link: "/rus/product-albamenvelara1.html" },
   { title: "Книга", price: "1000.00 TL", image: "/assets/images/albamenvelara.jpg", link: "/rus/product-albamenvelara.html" }
 ];
