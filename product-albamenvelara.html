@@ -227,21 +227,10 @@
         </div>
 
         
-        <!-- Payment Icons -->
-        <div class="flex flex-wrap items-center gap-6 payment-icons mb-6">
-          <img src="/assets/icons/mastercard.png" alt="mastercard">
-          <img src="/assets/icons/visa.png" alt="visa">
-        </div><div class="flex flex-col sm:flex-row gap-4 mb-8">
-          <!--   -->
-          <div class="flex items-center bg-gray-900 border border-gray-800 rounded-2xl p-1 h-14" data-qty>
-            <button class="w-12 h-full flex items-center justify-center text-xl hover:text-white transition" onclick="updateQty(-1)">&minus;</button>
-            <input type="number" id="qtyInput" value="1" min="1" class="qty-input w-12 bg-transparent text-center font-semibold outline-none text-white" data-qty-input>
-            <button class="w-12 h-full flex items-center justify-center text-xl hover:text-white transition" onclick="updateQty(1)">&plus;</button>
-          </div>
-          
+        <div class="flex flex-col sm:flex-row gap-4 mb-8">
           <!--     -->
           <button id="addToCartBtn" 
-            class="btn-glow flex-1 h-14 rounded-2xl text-black font-bold uppercase tracking-wider transition-all"
+            class="btn-glow w-full h-14 rounded-2xl text-black font-bold uppercase tracking-wider transition-all"
             data-product-id="albamenvelara"
             data-product-name="Kitap"
             data-product-price="1000"

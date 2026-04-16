@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="product-text-black">
+<html lang="tr" class="product-text-black">
 <head>
   <!-- Универсальный favicon-блок -->
   <link rel="icon" type="image/png" href="/assets/icons/AlbaLogo.png" sizes="32x32">
@@ -11,7 +11,7 @@
   <meta name="msapplication-TileImage" content="/favicon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Book  Alba Space</title>
+  <title>Kitap  Alba Space</title>
   
   <!--    (   ) -->
   <link rel="stylesheet" href="/assets/css/site.css">
@@ -34,8 +34,8 @@
       --header-bg: #020617;
       --accent: #00c2ff;
       --accent-hover: #0099cc;
-      --page-bg: #020617;
-      --text-main: #f3f4f6;
+      --page-bg: #ffffff;
+      --text-main: #000000;
     }
 
     body {
@@ -170,7 +170,7 @@
 </head>
 <body>
   <!--    -->
-  <div data-include="/header-en-black"></div>
+  <div data-include="/header-tr-black"></div>
 
   
 
@@ -200,8 +200,8 @@
 
       <!--   -->
       <div class="reveal" style="transition-delay: 0.1s;">
-        <nav class="text-xs uppercase tracking-widest text-gray-500 mb-4">Products / Clothing / Book</nav>
-        <h1 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight uppercase">Book</h1>
+        <nav class="text-xs uppercase tracking-widest text-gray-500 mb-4">Urunler / Giyim / Kitap</nav>
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight uppercase">Kitap</h1>
         <div class="text-3xl font-light text-white mb-8">1000.00 TL</div>
         
         <div class="glass-card p-6 rounded-3xl mb-8">
@@ -209,46 +209,35 @@
           <ul class="space-y-3 text-gray-300">
             <li class="flex items-center gap-3">
               <span class="w-1.5 h-1.5 rounded-full" style="background:var(--accent)"></span>
-              The story of Albamen Ve Lara
+              Albamen Ve Lara'n?n hikayesi
             </li>
             <li class="flex items-center gap-3">
               <span class="w-1.5 h-1.5 rounded-full" style="background:var(--accent)"></span>
-              Inspiring
+              Ilham verici
             </li>
             <li class="flex items-center gap-3">
               <span class="w-1.5 h-1.5 rounded-full" style="background:var(--accent)"></span>
-              Colorful images
+              Renkli resimler
             </li>
             <li class="flex items-center gap-3">
               <span class="w-1.5 h-1.5 rounded-full" style="background:var(--accent)"></span>
-              Quality print
+              Kaliteli bask?
             </li>
           </ul>
         </div>
 
         
-        <!-- Payment Icons -->
-        <div class="flex flex-wrap items-center gap-6 payment-icons mb-6">
-          <img src="/assets/icons/mastercard.png" alt="mastercard">
-          <img src="/assets/icons/visa.png" alt="visa">
-        </div><div class="flex flex-col sm:flex-row gap-4 mb-8">
-          <!--   -->
-          <div class="flex items-center bg-gray-900 border border-gray-800 rounded-2xl p-1 h-14" data-qty>
-            <button class="w-12 h-full flex items-center justify-center text-xl hover:text-white transition" onclick="updateQty(-1)">&minus;</button>
-            <input type="number" id="qtyInput" value="1" min="1" class="qty-input w-12 bg-transparent text-center font-semibold outline-none text-white" data-qty-input>
-            <button class="w-12 h-full flex items-center justify-center text-xl hover:text-white transition" onclick="updateQty(1)">&plus;</button>
-          </div>
-          
+        <div class="flex flex-col sm:flex-row gap-4 mb-8">
           <!--     -->
           <button id="addToCartBtn" 
-            class="btn-glow flex-1 h-14 rounded-2xl text-black font-bold uppercase tracking-wider transition-all"
+            class="btn-glow w-full h-14 rounded-2xl text-black font-bold uppercase tracking-wider transition-all"
             data-product-id="albamenvelara"
-            data-product-name="Book"
+            data-product-name="Kitap"
             data-product-price="1000"
             data-product-image="/assets/images/albamenvelara.jpg"
-            data-add-label="ADD TO CART"
-            data-added-label="ADDED!">
-            ADD TO CART
+            data-add-label="SEPETE EKLE"
+            data-added-label="EKLENDI!">
+            SEPETE EKLE
           </button>
         </div>
 
@@ -270,7 +259,7 @@
   </main>
 
   <!--    -->
-  <div data-include="/footer-en-black"></div>
+  <div data-include="/footer-tr-black"></div>
 
   <script>
     //  
