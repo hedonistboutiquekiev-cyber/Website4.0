@@ -613,11 +613,11 @@ function enhanceFooter(root) {
 
   const emailBtn = document.createElement('a');
   emailBtn.className = 'alba-footer-action';
-  emailBtn.href = 'mailto:hello@.com.tr';
+  emailBtn.href = 'mailto:hello@albaspace.com.tr';
   emailBtn.innerHTML = `
     <div class="action-row">
       <span class="action-icon">✉</span>
-      <span class="action-text">hello@.com.tr</span>
+      <span class="action-text">hello@albaspace.com.tr</span>
     </div>
     <div class="action-hint alba-blink">Write to us</div>
   `;
