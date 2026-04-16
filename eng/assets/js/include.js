@@ -623,11 +623,6 @@ function enhanceFooter(root) {
   `;
   contactPanel.appendChild(emailBtn);
 
-  const map1 = buildMapButton(merkezBlock, 'Tap to open map');
-  const map2 = buildMapButton(adanaBlock, 'Tap to open map');
-  if (map1) contactPanel.appendChild(map1);
-  if (map2) contactPanel.appendChild(map2);
-
   addressContainer.innerHTML = '';
   addressContainer.style.display = 'flex';
   addressContainer.style.flexDirection = 'column';
