@@ -1050,6 +1050,10 @@ function enhanceFooter(root) {
   emailBtn.href = 'mailto:hello@albaspace.com.tr';
   emailBtn.innerHTML = `<div class="action-row"><span class="action-icon">✉</span><span class="action-text">hello@albaspace.com.tr</span></div><div class="action-hint alba-blink">${emailHint}</div>`;
   contactPanel.appendChild(emailBtn);
+  const map1 = buildMapButton(merkezBlock, mapHint);
+  const map2 = buildMapButton(adanaBlock, mapHint);
+  if (map1) contactPanel.appendChild(map1);
+  if (map2) contactPanel.appendChild(map2);
   addressContainer.innerHTML = '';
   addressContainer.style.display = 'flex';
   addressContainer.style.flexDirection = 'column';
