@@ -302,34 +302,7 @@
     //   (   cart.js)
     const cartBtn = document.getElementById('addToCartBtn');
     cartBtn.addEventListener('click', () => {
-      const input = document.getElementById('qtyInput');
-      const qty = parseInt(input.value || '1', 10);
-      
-      // ,        cart.js
-      if (typeof cartManager !== 'undefined') {
-          cartManager.addItem({
-            id: cartBtn.dataset.productId,
-            name: cartBtn.dataset.productName,
-            price: Number(cartBtn.dataset.productPrice),
-            image: cartBtn.dataset.productImage,
-            url: window.location.pathname,
-            qty
-          });
-      } else {
-        console.warn('cartManager  .   /assets/js/cart.js');
-      }
-
-      //   
-      const originalText = cartBtn.innerHTML;
-      cartBtn.innerHTML = cartBtn.dataset.addedLabel || 'EKLENDI!';
-      cartBtn.style.background = '#22c55e';
-      cartBtn.disabled = true;
-      
-      setTimeout(() => {
-        cartBtn.innerHTML = originalText;
-        cartBtn.style.background = '';
-        cartBtn.disabled = false;
-      }, 1400);
+      window.location.href = 'https://iglooyayinevi.com/albamen-ve-lara-uzayda';
     });
   </script>
 <script src="/assets/js/related-products.js" defer></script>
