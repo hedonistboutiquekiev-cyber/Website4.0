@@ -465,8 +465,9 @@
 
   /* ALBAMEN: smaller vertical dropdown under trigger */
   .main-nav .dropdown > .dropdown-trigger[href$="albamen.html"] + .dropdown-menu {
-    left: 50% !important;
-    transform: translateX(-50%) !important;
+    left: auto !important;
+    right: 0 !important;
+    transform: none !important;
     top: 100% !important;
     min-width: 160px !important;
     width: auto !important;

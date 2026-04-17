@@ -147,8 +147,9 @@
 
   /* ALBAMEN: smaller vertical dropdown under trigger */
   .main-nav .dropdown > .dropdown-trigger[href$="albamen.html"] + .dropdown-menu {
-    left: 50%;
-    transform: translateX(-50%);
+    left: auto;
+    right: 0;
+    transform: none;
     top: 100%;
     min-width: 160px;
     width: auto;
@@ -315,39 +316,17 @@
     justify-content: center;
     align-items: center;
     gap: 8px;
-    background: rgba(0, 0, 0, 0.96);
-    border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 12px 10px;
-    margin: 0;
-    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.65);
-    transform: translate(-50%, -50%) scale(0.97);
-    opacity: 0;
-    visibility: hidden;
-    transition: transform 0.28s cubic-bezier(0.22, 1.0, 0.36, 1), opacity 0.25s ease, visibility 0.25s ease;
-    transform-origin: center center;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .dropdown:hover .dropdown-menu,
-  .dropdown.active .dropdown-menu {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .dropdown-menu a,
-  .dropdown-menu button {
-    padding: 10px 12px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: min(120px, 100%);
-    min-width: 100px;
-    max-width: 140px;
-    white-space: normal;
-    line-height: 1.2;
+      background: rgba(0, 0, 0, 1);
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 12px 10px;
+      margin: 0;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.95), inset 0 0 0 1px rgba(0, 194, 255, 0.1);
+      transform: translate(-50%, -50%) scale(0.97);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 0.28s cubic-bezier(0.22, 1.0, 0.36, 1), opacity 0.25s ease, visibility 0.25s ease, box-shadow 0.3s ease;
     text-align: center;
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.05);
@@ -366,6 +345,47 @@
     padding: 8px 10px;
     font-size: 14px;
     border-radius: 6px;
+  }
+}
+
+/* ============================================================================
+   MOBILE BACKDROP - Block clicks outside dropdown menu
+   ============================================================================ */
+
+@media (max-width: 1023px) {
+  /* When dropdown is active, create a full-screen invisible overlay */
+  .dropdown.active::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1499;
+    background: rgba(0, 0, 0, 0.5);
+    cursor: default;
+    pointer-events: auto;
+    animation: fadeIn 0.25s ease forwards;
+  }
+
+  /* Ensure all elements behind the dropdown cannot receive clicks */
+  body.has-active-dropdown {
+    pointer-events: none;
+  }
+
+  body.has-active-dropdown .dropdown.active,
+  body.has-active-dropdown .dropdown.active .dropdown-menu,
+  body.has-active-dropdown .dropdown.active .dropdown-menu * {
+    pointer-events: auto;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }
 

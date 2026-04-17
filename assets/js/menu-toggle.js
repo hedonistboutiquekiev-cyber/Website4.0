@@ -41,6 +41,9 @@
     // Setup event delegation
     setupDocumentListeners();
     setupWindowResize();
+    
+    // Ensure backdrop class is cleared on init
+    updateBackdropClass();
 
     log(`✅ Initialized ${dropdowns.length} dropdowns`);
   }
@@ -77,6 +80,7 @@
         closeTimeoutId = setTimeout(() => {
           dropdown.classList.remove('active');
           trigger.setAttribute('aria-expanded', 'false');
+          updateBackdropClass();
           closeTimeoutId = null;
         }, 2000);
       };
@@ -117,9 +121,23 @@
     if (isActive) {
       dropdown.classList.remove('active');
       trigger.setAttribute('aria-expanded', 'false');
+      updateBackdropClass();
     } else {
       dropdown.classList.add('active');
       trigger.setAttribute('aria-expanded', 'true');
+      updateBackdropClass();
+    }
+  }
+
+  /**
+   * Update backdrop class on body based on active dropdowns
+   */
+  function updateBackdropClass() {
+    const hasActiveDropdown = document.querySelectorAll('.dropdown.active').length > 0;
+    if (hasActiveDropdown) {
+      document.body.classList.add('has-active-dropdown');
+    } else {
+      document.body.classList.remove('has-active-dropdown');
     }
   }
 
@@ -136,6 +154,7 @@
             const trigger = dropdown.querySelector('.dropdown-trigger');
             if (trigger) trigger.setAttribute('aria-expanded', 'false');
           });
+          updateBackdropClass();
         }
       }
     });
@@ -148,6 +167,7 @@
           const trigger = dropdown.querySelector('.dropdown-trigger');
           if (trigger) trigger.setAttribute('aria-expanded', 'false');
         });
+        updateBackdropClass();
       }
     });
   }
@@ -167,6 +187,7 @@
           const trigger = dropdown.querySelector('.dropdown-trigger');
           if (trigger) trigger.setAttribute('aria-expanded', 'false');
         });
+        updateBackdropClass();
 
         lastWindowWidth = currentWidth;
         initialized = false;

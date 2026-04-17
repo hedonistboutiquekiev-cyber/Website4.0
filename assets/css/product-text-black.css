@@ -103,3 +103,88 @@ html.product-text-black .footer img {
 
 /* If header uses CSS variable --header-bg, override it */
 html.product-text-black { --header-bg: #020617 !important; }
+
+/* ===== WHITE DROPDOWN MENU FOR PRODUCT PAGES ===== */
+
+/* Dropdown menu white background on product/shop pages */
+html.product-text-black .header-inner .main-nav .dropdown-menu {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Dropdown menu items text color on product pages */
+html.product-text-black .header-inner .main-nav .dropdown-menu a,
+html.product-text-black .header-inner .main-nav .dropdown-menu button {
+  color: #000000 !important;
+}
+
+/* Dropdown hover state on product pages */
+html.product-text-black .header-inner .main-nav .dropdown-menu a:hover,
+html.product-text-black .header-inner .main-nav .dropdown-menu button:hover {
+  background-color: #f3f4f6 !important;
+  color: #000000 !important;
+}
+
+/* Desktop-specific menus for products/shop pages */
+@media (min-width: 1024px) {
+  /* Services menu white on product pages */
+  html.product-text-black .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
+  }
+
+  /* Services menu items color on product pages */
+  html.product-text-black .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu a,
+  html.product-text-black .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu button {
+    color: #000000 !important;
+  }
+
+  /* Services menu hover on product pages */
+  html.product-text-black .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu a:hover,
+  html.product-text-black .main-nav .dropdown > .dropdown-trigger[href$="hizmetler.html"] + .dropdown-menu button:hover {
+    background-color: #f3f4f6 !important;
+    color: #000000 !important;
+  }
+
+  /* About menu white on product pages */
+  html.product-text-black .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
+  }
+
+  /* About menu items color on product pages */
+  html.product-text-black .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu a,
+  html.product-text-black .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu button {
+    color: #000000 !important;
+  }
+
+  /* About menu hover on product pages */
+  html.product-text-black .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu a:hover,
+  html.product-text-black .main-nav .dropdown > .dropdown-trigger[href$="hakkimizda.html"] + .dropdown-menu button:hover {
+    background-color: #f3f4f6 !important;
+    color: #000000 !important;
+  }
+
+  /* Albamen menu white on product pages */
+  html.product-text-black .main-nav .dropdown > .dropdown-trigger[href$="albamen.html"] + .dropdown-menu {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
+  }
+
+  /* Albamen menu items color on product pages */
+  html.product-text-black .main-nav .dropdown > .dropdown-trigger[href$="albamen.html"] + .dropdown-menu a,
+  html.product-text-black .main-nav .dropdown > .dropdown-trigger[href$="albamen.html"] + .dropdown-menu button {
+    color: #000000 !important;
+  }
+
+  /* Albamen menu hover on product pages */
+  html.product-text-black .main-nav .dropdown > .dropdown-trigger[href$="albamen.html"] + .dropdown-menu a:hover,
+  html.product-text-black .main-nav .dropdown > .dropdown-trigger[href$="albamen.html"] + .dropdown-menu button:hover {
+    background-color: #f3f4f6 !important;
+    color: #000000 !important;
+  }
+}
