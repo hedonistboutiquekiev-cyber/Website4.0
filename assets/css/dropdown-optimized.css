@@ -27,15 +27,36 @@
 .dropdown-trigger {
   cursor: pointer;
   user-select: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   padding: 8px 12px;
   border-radius: 4px;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+.dropdown-trigger::after {
+  content: '▾';
+  font-size: 12px;
+  transition: transform 0.3s ease;
+  color: #9ca3af;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 2px;
+}
+
 .dropdown-trigger:hover {
   background-color: rgba(0, 194, 255, 0.1);
   color: rgba(0, 194, 255, 1);
+}
+
+.dropdown-trigger:hover::after {
+  color: #00c2ff;
+}
+
+.dropdown.active .dropdown-trigger::after {
+  transform: rotate(180deg);
+  color: #00c2ff;
 }
 
 /* Dropdown Menu */
@@ -147,22 +168,22 @@
 
   /* ALBAMEN: smaller vertical dropdown under trigger */
   .main-nav .dropdown > .dropdown-trigger[href$="albamen.html"] + .dropdown-menu {
-    left: auto;
-    right: 0;
-    transform: none;
-    top: 100%;
-    min-width: 160px;
-    width: auto;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 4px;
-    padding: 8px;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-    background: linear-gradient(180deg, #001a33 0%, #003366 100%);
-    border: 1px solid #003366;
-    opacity: 1;
-    z-index: 10050;
+    left: auto !important;
+    right: 0 !important;
+    transform: none !important;
+    top: 100% !important;
+    min-width: 160px !important;
+    width: auto !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 4px !important;
+    padding: 8px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
+    background: linear-gradient(180deg, #001a33 0%, #003366 100%) !important;
+    border: 1px solid #003366 !important;
+    opacity: 1 !important;
+    z-index: 10050 !important;
   }
 
   .main-nav .dropdown > .dropdown-trigger[href$="albamen.html"] + .dropdown-menu::before,
