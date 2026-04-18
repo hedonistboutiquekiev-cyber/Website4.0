@@ -3,6 +3,16 @@
 runAfterDomReady(() => {
   // AI-виджеты включены — используются для текстового и голосового общения
   window.__disableAiWidgets = false;
+  
+  // 0. Inject model-viewer error handler (very first, before analytics)
+  if (!document.querySelector('script[src*="model-viewer-error-handler"]')) {
+    const errorScript = document.createElement('script');
+    errorScript.src = '/assets/js/model-viewer-error-handler.js';
+    errorScript.defer = false;
+    errorScript.async = false;
+    document.head.insertBefore(errorScript, document.head.firstChild);
+  }
+  
   // 1. ЗАПУСК АНАЛИТИКИ (В первую очередь)
   injectAnalytics();
 
@@ -872,13 +882,35 @@ function ensureModelViewerLoaded() {
     const script = document.createElement("script");
     script.type = "module";
     script.src = googleSrc;
+    script.setAttribute('crossorigin', 'anonymous');
+    let timeoutId;
     script.onerror = () => {
+      clearTimeout(timeoutId);
       if (window.customElements && window.customElements.get("model-viewer")) return;
+      console.debug('[model-viewer] Primary CDN failed, trying fallback...');
       const fallbackScript = document.createElement("script");
       fallbackScript.type = "module";
       fallbackScript.src = fallbackSrc;
+      fallbackScript.setAttribute('crossorigin', 'anonymous');
+      fallbackScript.onerror = () => {
+        console.warn('[model-viewer] Both CDN sources failed - model viewer may not work');
+      };
+      fallbackScript.onload = () => {
+        console.debug('[model-viewer] Fallback CDN loaded successfully');
+      };
       document.head.appendChild(fallbackScript);
     };
+    script.onload = () => {
+      clearTimeout(timeoutId);
+      console.debug('[model-viewer] Primary CDN loaded successfully');
+    };
+    // Timeout for script load (catch any hanging requests)
+    timeoutId = setTimeout(() => {
+      if (!window.customElements || !window.customElements.get("model-viewer")) {
+        console.debug('[model-viewer] Primary CDN timeout, trying fallback...');
+        script.onerror?.();
+      }
+    }, 10000); // 10 second timeout
     document.head.appendChild(script);
   };
   setTimeout(loadModelViewer, 800);

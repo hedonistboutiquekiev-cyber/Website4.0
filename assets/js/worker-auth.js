@@ -11,9 +11,16 @@ function login(options = {}) {
 
 async function checkUser() {
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5-second timeout
+
     const res = await fetch(WORKER_ME_URL, {
-      credentials: "include"
+      credentials: "include",
+      signal: controller.signal,
+      mode: "cors"
     });
+
+    clearTimeout(timeoutId);
 
     if (res.ok) {
       const user = await res.json();
@@ -23,11 +30,18 @@ async function checkUser() {
       closeAuthUi({ closeModal: true, closeMenu: true });
       restorePendingReturnUrl();
     } else {
-      console.log("Not logged in");
+      console.log("Not logged in (status: " + res.status + ")");
       setUserText("");
     }
   } catch (error) {
-    console.error("Failed to check current user:", error);
+    // Silently handle errors (CORS, timeout, network) without blocking page
+    if (error.name === "AbortError") {
+      console.debug("Auth check timeout - continuing without authentication");
+    } else if (error instanceof TypeError && error.message.includes("Failed to fetch")) {
+      console.debug("Auth API unreachable - continuing without authentication");
+    } else {
+      console.debug("Auth check failed:", error.message);
+    }
     setUserText("");
   }
 }
@@ -108,4 +122,16 @@ function closeAuthUi(options = {}) {
 window.login = login;
 window.checkUser = checkUser;
 
-checkUser();
+// Defer checkUser() to prevent blocking page load
+// Only attempt if header contains auth user element
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    if (document.querySelector('.worker-auth-user')) {
+      setTimeout(checkUser, 100);
+    }
+  }, { once: true });
+} else {
+  if (document.querySelector('.worker-auth-user')) {
+    setTimeout(checkUser, 100);
+  }
+}

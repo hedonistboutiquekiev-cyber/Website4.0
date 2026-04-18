@@ -132,8 +132,19 @@
     viewer.addEventListener('poster-dismissed', () => { clearTimeout(fallback); if (progressFill) progressFill.style.width = '100%'; setTimeout(hideOverlay, 250); });
     viewer.addEventListener('error', showError);
 
-    // Fallback: if model loading stalls (increased to 60s for heavy 50MB+ models)
-    fallback = setTimeout(hideOverlay, 60000);
+    // Improved fallback: detect file size and adjust timeout accordingly
+    // Large files (>20MB) may need more time on slower connections
+    let timeoutDuration = 60000; // Default 60 seconds
+    const src = viewer.getAttribute('src');
+    if (src) {
+      // Quick check of potential file size based on URL patterns
+      if (src.includes('imece') || src.includes('turksat-5') || src.includes('hubble') || 
+          src.includes('lagari') || src.includes('gokturk-1')) {
+        // These are known large models
+        timeoutDuration = 120000; // 120 seconds for large models
+      }
+    }
+    fallback = setTimeout(hideOverlay, timeoutDuration);
 
     // if viewer becomes removed, cleanup
     const obs = new MutationObserver(() => {

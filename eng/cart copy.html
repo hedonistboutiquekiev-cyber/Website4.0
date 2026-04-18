@@ -207,7 +207,7 @@
           total += itemTotal;
           const attrs = [(item.color || ''), (item.size || '')].filter(Boolean).join(' / ');
           lines.push(`- ${item.name}${attrs ? ' (' + attrs + ')' : ''} x${item.qty}: TL${itemTotal.toFixed(2)}`);
-        });
+        });  "1 "
         lines.push(`Toplam: TL${total.toFixed(2)}`);
         return lines.join('\n');
       }
