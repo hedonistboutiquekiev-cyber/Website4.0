@@ -34,6 +34,7 @@
   <link rel="stylesheet" href="/assets/css/site.css" />
   <script src="/assets/js/include.js" defer></script>
   <script src="/assets/js/menu-toggle.js" defer></script>
+  <script src="/assets/js/model-viewer-debug.js" defer></script>
 </head>
 <body>
   <div data-include="/header-tr.html"></div>
@@ -45,5 +46,36 @@
     <model-viewer data-track="model_view" data-model-name="turksat-3b" src="/assets/models/zaglushka.glb" camera-controls ar ar-modes="webxr scene-viewer quick-look"></model-viewer>
   </div>
   <div data-include="/footer-tr.html"></div>
+
+    <!-- Model Viewer Fix Script - Direct initialization -->
+  <script>
+    (function() {
+      console.log('[Model-Viewer Init] Checking model-viewer status...');
+      
+      // Wait for model-viewer to be loaded
+      const checkModelViewer = () => {
+        const viewer = document.querySelector('model-viewer');
+        if (!viewer) {
+          console.log('[Model-Viewer Init] No model-viewer element found');
+          return;
+        }
+        
+        // Check if custom element is registered
+        if (window.customElements && window.customElements.get('model-viewer')) {
+          console.log('[Model-Viewer Init] model-viewer element is registered ✓');
+          return;
+        }
+        
+        // If not registered yet, check again in 500ms
+        setTimeout(checkModelViewer, 500);
+      };
+      
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', checkModelViewer);
+      } else {
+        setTimeout(checkModelViewer, 100);
+      }
+    })();
+  </script>
 </body>
 </html>

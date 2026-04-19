@@ -166,17 +166,18 @@
     pointer-events: auto !important;
   }
 
-  /* ALBAMEN: smaller vertical dropdown under trigger */
+  /* ALBAMEN: horizontal dropdown like other menus, centered between hizmetler and hakkimizda */
   .main-nav .dropdown > .dropdown-trigger[href$="albamen.html"] + .dropdown-menu {
-    left: auto !important;
-    right: 0 !important;
-    transform: none !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
     top: 100% !important;
-    min-width: 160px !important;
+    min-width: auto !important;
     width: auto !important;
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 4px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 8px !important;
     padding: 8px !important;
     border-radius: 8px !important;
     box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
