@@ -466,6 +466,11 @@
         margin-left: 8px !important;
     }
 
+    /* Show mobile positioned cart */
+    .header-cart-link.mobile-positioned {
+        display: flex !important;
+    }
+
     /* 2. SECOND LINE: Navigation */
     .header-inner .main-nav {
         display: flex !important;
@@ -665,13 +670,14 @@
     border-radius: 12px !important;
     border: 1px solid rgba(0, 191, 255, 0.3) !important;
     display: none;
-    flex-direction: column !important;
-    gap: 15px !important;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
 }
 
 #alienMenu .alien-menu-item {
-    display: inline-block !important;
-    width: auto !important;
+    display: block !important;
+    width: 100% !important;
     padding: 10px 12px !important;
     background-color: #00BFFF !important; /* Deep Sky Blue */
     color: #ffffff !important;
@@ -684,7 +690,7 @@
     box-shadow: 0 4px 6px rgba(0, 191, 255, 0.2) !important;
     text-align: center !important;
     border: none !important;
-    margin: 0 4px !important;
+    margin: 0 !important;
 }
 
 #alienMenu .alien-menu-item:hover,

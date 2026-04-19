@@ -332,11 +332,8 @@
     max-height: 72vh;
     overflow-x: auto;
     overflow-y: hidden;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 8px;
       background: rgba(0, 0, 0, 1);
       border-radius: 18px;
@@ -354,6 +351,16 @@
     background: rgba(255, 255, 255, 0.05);
     flex: 0 0 auto;
     scroll-snap-align: center;
+  }
+
+  .dropdown-menu a,
+  .dropdown-menu button {
+    width: 100%;
+    padding: 12px 8px;
+    font-size: 14px;
+    text-align: center;
+    justify-content: center;
+    box-sizing: border-box;
   }
 
   .dropdown-menu a:hover,

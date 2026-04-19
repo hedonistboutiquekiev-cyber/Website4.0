@@ -248,11 +248,8 @@
     min-width: 100vw !important;
     max-height: 240px;
     overflow-y: auto;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 8px;
     z-index: 1500 !important;
     background: linear-gradient(135deg, #001a33 0%, #003366 100%);
@@ -286,7 +283,7 @@
   .dropdown-menu button,
   .dropdown-menu [role="menuitem"] {
     display: inline-flex;
-    width: auto;
+    width: 100%;
     text-align: center;
     padding: 10px 12px;
     font-size: 13px;
@@ -298,7 +295,6 @@
     pointer-events: auto !important;
     box-sizing: border-box;
     white-space: nowrap;
-    flex: 0 0 auto;
   }
 
   .dropdown-menu a:hover,
