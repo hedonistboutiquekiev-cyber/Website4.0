@@ -2060,7 +2060,9 @@ select, select option {
 }
 
 #alienMenu .alien-menu-item {
-    width: 100%;
+    display: inline-block;
+    width: auto;
+    margin: 0 4px;
 }
 
 #alienMenu .alien-menu-google {

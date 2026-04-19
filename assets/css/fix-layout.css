@@ -670,9 +670,9 @@
 }
 
 #alienMenu .alien-menu-item {
-    display: block !important;
-    width: 100% !important;
-    padding: 10px 0 !important;
+    display: inline-block !important;
+    width: auto !important;
+    padding: 10px 12px !important;
     background-color: #00BFFF !important; /* Deep Sky Blue */
     color: #ffffff !important;
     text-decoration: none !important;
@@ -684,6 +684,7 @@
     box-shadow: 0 4px 6px rgba(0, 191, 255, 0.2) !important;
     text-align: center !important;
     border: none !important;
+    margin: 0 4px !important;
 }
 
 #alienMenu .alien-menu-item:hover,
