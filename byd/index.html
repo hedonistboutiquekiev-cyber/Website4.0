@@ -3,69 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebAR: Примерка 3D Очков и Кепок</title>
+    <title>WebAR: Виртуальная примерка (Albaspace Edition)</title>
+    
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js" crossorigin="anonymous"></script>
     
     <style>
-        body { margin: 0; overflow: hidden; background: #111; font-family: sans-serif; color: white; }
-        #container { position: relative; width: 100vw; height: 100vh; }
-        video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); z-index: 1; }
-        /* 3D Холст Three.js */
-        #three_canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+        body { margin: 0; overflow: hidden; background: #000; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: white; }
         
-        /* Статус и Кнопки */
-        .status { position: absolute; top: 10px; left: 10px; z-index: 100; background: rgba(0,0,0,0.6); padding: 8px; border-radius: 4px; }
-        .controls { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; gap: 10px; }
-        button { padding: 10px 20px; font-size: 16px; cursor: pointer; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 5px; transition: background 0.3s; }
-        button:hover, button.active { background: rgba(255,255,255,0.5); }
+        /* Контейнер для всего приложения */
+        #app-container { position: relative; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; }
+
+        /* Видео и 3D-холст накладываются друг на друга */
+        video, canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+        
+        /* Видео на заднем плане, 3D поверх него */
+        video { z-index: 1; }
+        #three_canvas { z-index: 2; pointer-events: none; }
+
+        /* Интерфейс управления */
+        .ui-overlay { position: absolute; bottom: 30px; left: 0; right: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .status-badge { background: rgba(0, 0, 0, 0.7); padding: 8px 15px; border-radius: 20px; font-size: 14px; border: 1px solid rgba(255,255,255,0.2); }
+        .controls { display: flex; gap: 10px; background: rgba(255, 255, 255, 0.1); padding: 10px; border-radius: 15px; backdrop-filter: blur(10px); }
+        
+        button { 
+            padding: 12px 18px; border: none; background: rgba(255,255,255,0.2); color: white; 
+            border-radius: 10px; cursor: pointer; transition: all 0.2s ease; font-weight: bold;
+        }
+        button:hover { background: rgba(255,255,255,0.4); transform: translateY(-2px); }
+        button.active { background: #3498db; box-shadow: 0 0 15px rgba(52, 152, 219, 0.5); }
     </style>
 </head>
 <body>
 
-    <div class="status" id="status">Загрузка нейросети...</div>
-    
-    <div class="controls">
-        <button onclick="switchModel('glasses1')" id="btn-glasses1">Очки 1</button>
-        <button onclick="switchModel('glasses2')" id="btn-glasses2">Очки 2</button>
-        <button onclick="switchModel('cap1')" id="btn-cap1">Кепка 1</button>
-        <button onclick="switchModel('none')">Сброс</button>
-    </div>
-
-    <div id="container">
+    <div id="app-container">
         <video id="webcam" autoplay playsinline></video>
         <canvas id="three_canvas"></canvas>
+
+        <div class="ui-overlay">
+            <div class="status-badge" id="status">Инициализация системы...</div>
+            <div class="controls">
+                <button onclick="switchModel('glasses1')" id="btn-glasses1">Очки 1</button>
+                <button onclick="switchModel('glasses2')" id="btn-glasses2">Очки 2</button>
+                <button onclick="switchModel('cap1')" id="btn-cap1">Кепка</button>
+                <button onclick="switchModel('none')" style="background: rgba(231, 76, 60, 0.4);">Сброс</button>
+            </div>
+        </div>
     </div>
 
     <script type="module">
-        // Импортируем Three.js из CDN
         import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-        // Импортируем загрузчик GLTF
         import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
         import { FaceLandmarker, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js";
+
+        // --- 1. НАСТРОЙКИ МОДЕЛЕЙ ---
+        // scale: размер модели (зависит от ваших .glb)
+        // yOffset: смещение по вертикали (для кепки, если она сидит слишком низко)
+        const MODELS_CONFIG = {
+            glasses1: { type: 'glasses', url: 'glasses1.glb', scale: 0.15, yOffset: 0 },
+            glasses2: { type: 'glasses', url: 'glasses2.glb', scale: 0.16, yOffset: 0 },
+            cap1:     { type: 'cap',     url: 'cap1.glb',     scale: 0.35, yOffset: 0.18 }
+        };
 
         const video = document.getElementById("webcam");
         const status = document.getElementById("status");
         
-        // --- КОНФИГУРАЦИЯ МОДЕЛЕЙ ---
-        // ЗАМЕНИТЕ ЭТИ ИМЕНА НА ВАШИ .glb ФАЙЛЫ, КОТОРЫЕ ВЫ ЗАГРУЗИЛИ НА GITHUB
-        const MODELS_CONFIG = {
-            glasses1: { type: 'glasses', url: 'glasses1.glb', scale: 1.0, offset: [0, 0, 0] },
-            glasses2: { type: 'glasses', url: 'glasses2.glb', scale: 1.1, offset: [0, 0, 0] },
-            cap1:     { type: 'cap',     url: 'cap1.glb',     scale: 2.5, offset: [0, 0.1, 0] } // Пример смещения выше головы
-        };
-        // ---------------------------
-
         let faceLandmarker;
-        let lastVideoTime = -1;
-        let activeModelKey = 'none';
-        let currentLoadedModel = null;
-
-        // --- Переменные Three.js ---
         let scene, camera, renderer, gltfLoader;
-        let faceGeometry, faceMesh; // Для продвинутой привязки (в будущем)
+        let currentModel = null;
+        let activeKey = 'none';
+        let lastVideoTime = -1;
 
-        // 1. Инициализация MediaPipe
-        async function initFaceDetection() {
+        // --- 2. ИНИЦИАЛИЗАЦИЯ THREE.JS ---
+        function initThreeJS() {
+            scene = new THREE.Scene();
+
+            // Используем OrthographicCamera для точного наложения на 2D видео
+            const aspect = window.innerWidth / window.innerHeight;
+            camera = new THREE.OrthographicCamera(-aspect, aspect, 1, -1, 0.1, 1000);
+            camera.position.z = 10;
+
+            renderer = new THREE.WebGLRenderer({
+                canvas: document.getElementById('three_canvas'),
+                alpha: true,
+                antialias: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            // Освещение (настроено для реалистичности 3D)
+            const ambient = new THREE.AmbientLight(0xffffff, 1.5);
+            scene.add(ambient);
+            const directional = new THREE.DirectionalLight(0xffffff, 2.0);
+            directional.position.set(0, 1, 2);
+            scene.add(directional);
+
+            gltfLoader = new GLTFLoader();
+        }
+
+        // --- 3. ЗАГРУЗКА И СМЕНА МОДЕЛЕЙ ---
+        window.switchModel = async (key) => {
+            if (currentModel) {
+                scene.remove(currentModel);
+                currentModel = null;
+            }
+
+            // Сброс активных кнопок
+            document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active'));
+            if(key === 'none') {
+                activeKey = 'none';
+                status.innerText = "Режим просмотра";
+                return;
+            }
+
+            const config = MODELS_CONFIG[key];
+            const btn = document.getElementById(`btn-${key}`);
+            if(btn) btn.classList.add('active');
+
+            status.innerText = "Загрузка 3D...";
+            
+            gltfLoader.load(config.url, (gltf) => {
+                currentModel = gltf.scene;
+                scene.add(currentModel);
+                activeKey = key;
+                status.innerText = "Примерка активна";
+            }, undefined, (err) => {
+                console.error(err);
+                status.innerText = "Ошибка загрузки .glb";
+            });
+        };
+
+        // --- 4. НЕЙРОСЕТЬ MEDIAPIPE ---
+        async function initAR() {
             const filesetResolver = await FilesetResolver.forVisionTasks(
                 "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/wasm"
             );
@@ -78,190 +146,92 @@
                 numFaces: 1
             });
             
-            initThreeJS(); // После нейросети запускаем 3D
+            initThreeJS();
             startCamera();
         }
 
-        // 2. Настройка Three.js сцены
-        function initThreeJS() {
-            scene = new THREE.Scene();
-
-            // Камера. Мы сделаем её ортогональной, чтобы упростить привязку к 2D координатам.
-            const aspect = window.innerWidth / window.innerHeight;
-            camera = new THREE.OrthographicCamera(-aspect, aspect, 1, -1, 0.1, 1000);
-            camera.position.z = 10; // Смотрим издалека
-
-            renderer = new THREE.WebGLRenderer({
-                canvas: document.getElementById('three_canvas'),
-                alpha: true, // Прозрачный фон
-                antialias: true // Сглаживание
-            });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-
-            // Свет. Необходим, чтобы модель была видна.
-            const ambientLight = new THREE.AmbientLight(0xffxff, 1.0); // Общий свет
-            scene.add(ambientLight);
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0); // Направленный свет (как солнце)
-            directionalLight.position.set(0, 1, 1);
-            scene.add(directionalLight);
-
-            gltfLoader = new GLTFLoader();
-            
-            console.log("Three.js настроен.");
-        }
-
-        // 3. Функция загрузки и смены моделей
-        async function loadARModel(modelKey) {
-            // Удаляем старую модель, если есть
-            if (currentLoadedModel) {
-                scene.remove(currentLoadedModel);
-                currentLoadedModel = null;
-            }
-
-            if (modelKey === 'none') {
-                activeModelKey = 'none';
-                return;
-            }
-
-            const config = MODELS_CONFIG[modelKey];
-            status.innerText = `Загрузка модели ${modelKey}...`;
-
-            try {
-                gltfLoader.load(config.url, (gltf) => {
-                    currentLoadedModel = gltf.scene;
-                    
-                    // Базовое масштабирование из конфига
-                    currentLoadedModel.scale.set(config.scale, config.scale, config.scale);
-                    
-                    // Применяем смещение центра модели, если нужно
-                    if (config.offset) {
-                        currentLoadedModel.position.set(...config.offset);
-                    }
-
-                    scene.add(currentLoadedModel);
-                    activeModelKey = modelKey;
-                    status.innerText = `Примерка: ${modelKey}`;
-                    console.log(`Модель ${modelKey} загружена.`);
-                }, undefined, (error) => {
-                    console.error("Ошибка загрузки модели:", error);
-                    status.innerText = `Ошибка загрузки ${config.url}. Проверьте файл на GitHub.`;
-                });
-            } catch (e) {
-                console.error(e);
-            }
-        }
-
-        // Делаем функцию смены модели доступной глобально для кнопок
-        window.switchModel = (modelKey) => {
-            loadARModel(modelKey);
-            // Обновляем активную кнопку (опционально)
-            document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active'));
-            const btn = document.getElementById(`btn-${modelKey}`);
-            if(btn) btn.classList.add('active');
-        };
-
-        // 4. Запуск камеры
         async function startCamera() {
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: "user", width: 1280, height: 720 } 
+                });
                 video.srcObject = stream;
-                video.addEventListener("loadeddata", predictWebcam);
+                video.addEventListener("loadeddata", () => {
+                    status.innerText = "Система готова";
+                    predictWebcam();
+                });
             } catch (err) {
-                status.innerText = "Ошибка доступа к камере.";
+                status.innerText = "Доступ к камере отклонен";
             }
         }
 
-        // 5. Основной цикл (Распознавание + Синхронизация 3D)
-        async function predictWebcam() {
+        // --- 5. ГЛАВНЫЙ ЦИКЛ ОБНОВЛЕНИЯ ---
+        function predictWebcam() {
             if (lastVideoTime !== video.currentTime) {
                 lastVideoTime = video.currentTime;
                 const results = faceLandmarker.detectForVideo(video, performance.now());
 
-                if (results.faceLandmarks && results.faceLandmarks[0] && currentLoadedModel && activeModelKey !== 'none') {
-                    updateModelTransform(results.faceLandmarks[0]);
-                } else if (currentLoadedModel) {
-                    // Если лицо не найдено, скрываем модель
-                    currentLoadedModel.visible = false;
+                if (results.faceLandmarks && results.faceLandmarks[0] && currentModel) {
+                    updateTransform(results.faceLandmarks[0]);
+                } else if (currentModel) {
+                    currentModel.visible = false;
                 }
             }
-            
-            // Рендерим 3D сцену Three.js
             renderer.render(scene, camera);
-            
             requestAnimationFrame(predictWebcam);
         }
 
-        // 6. Магия AR: Привязка модели к точкам лица
-        function updateModelTransform(landmarks) {
-            currentLoadedModel.visible = true;
-            const config = MODELS_CONFIG[activeModelKey];
-
-            // MediaPipe возвращает координаты от 0 до 1.
-            // Ортогональная камера Three.js настроена от -aspect до +aspect по X и от -1 до +1 по Y.
+        // --- 6. ЛОГИКА ПРИВЯЗКИ (ВАШИ ПИВОТЫ) ---
+        function updateTransform(landmarks) {
+            currentModel.visible = true;
+            const config = MODELS_CONFIG[activeKey];
             const aspect = window.innerWidth / window.innerHeight;
 
-            // Вспомогательная функция для перевода координат
-            const toThreeCoord = (lm) => ({
-                x: (lm.x * 2 - 1) * aspect, // Инвертируем X для зеркального отображения
-                y: -(lm.y * 2 - 1), // Инвертируем Y, так как в Three.js 'вверх' это +Y
-                z: -lm.z * 5 // Глубина (приблизительно)
+            // Конвертация координат MediaPipe -> Three.js
+            const getPos = (idx) => ({
+                x: (landmarks[idx].x * 2 - 1) * aspect,
+                y: -(landmarks[idx].y * 2 - 1),
+                z: -landmarks[idx].z * 10
             });
 
+            // Точки привязки
+            const leftTemple = getPos(234);
+            const rightTemple = getPos(454);
+            const bridge = getPos(168); // Между глазами
+            const forehead = getPos(10); // Верх лба
+
+            // Расчет ширины лица для масштабирования
+            const faceWidth = Math.sqrt(Math.pow(rightTemple.x - leftTemple.x, 2) + Math.pow(rightTemple.y - leftTemple.y, 2));
+            const angle = Math.atan2(rightTemple.y - leftTemple.y, rightTemple.x - leftTemple.x);
+
             if (config.type === 'glasses') {
-                // Привязка ОЧКОВ
-                const bridge = toThreeCoord(landmarks[168]); // Переносица
-                currentLoadedModel.position.set(bridge.x, bridge.y, bridge.z + 0.1);
-
-                // Поворот очков
-                const leftTemple = toThreeCoord(landmarks[234]);
-                const rightTemple = toThreeCoord(landmarks[454]);
-                
-                // Угол наклона головы (Roll)
-                const dx = rightTemple.x - leftTemple.x;
-                const dy = rightTemple.y - leftTemple.y;
-                const angle = Math.atan2(dy, dx);
-                currentLoadedModel.rotation.z = angle;
-                
-                // Масштабирование очков на основе ширины лица
-                const faceWidth = Math.sqrt(dx*dx + dy*dy);
-                const scale = faceWidth * config.scale * 1.5; // Коэффициент под модель
-                currentLoadedModel.scale.set(scale, scale, scale);
-
-            } else if (config.type === 'cap') {
-                // Привязка КЕПКИ
-                const topOfHead = toThreeCoord(landmarks[10]); // Верх лба/начало волос
-                // Добавляем смещение из конфига, так как кепка должна быть *над* точкой
-                currentLoadedModel.position.set(topOfHead.x, topOfHead.y, topOfHead.z);
-
-                // Поворот кепки (аналогично очкам)
-                const leftTemple = toThreeCoord(landmarks[234]);
-                const rightTemple = toThreeCoord(landmarks[454]);
-                const angle = Math.atan2(rightTemple.y - leftTemple.y, rightTemple.x - leftTemple.x);
-                currentLoadedModel.rotation.z = angle;
-
-                // Масштабирование кепки
-                const faceWidth = Math.sqrt(Math.pow(rightTemple.x - leftTemple.x, 2) + Math.pow(rightTemple.y - leftTemple.y, 2));
-                const scale = faceWidth * config.scale * 2.0;
-                currentLoadedModel.scale.set(scale, scale, scale);
+                // ПИВОТ ОЧКОВ: Точно на переносице
+                currentModel.position.set(bridge.x, bridge.y, bridge.z);
+            } else {
+                // ПИВОТ КЕПКИ: Центр модели. Ставим на лоб и поднимаем на yOffset
+                currentModel.position.set(forehead.x, forehead.y + config.yOffset, forehead.z);
             }
+
+            currentModel.rotation.z = angle;
+            
+            // Динамическое масштабирование
+            const s = faceWidth * config.scale * 10;
+            currentModel.scale.set(s, s, s);
+            
+            // Небольшой наклон (Yaw) в зависимости от поворота головы
+            const yaw = (landmarks[454].z - landmarks[234].z) * 2;
+            currentModel.rotation.y = yaw;
         }
 
-        // Обработка изменения размера окна
-        window.addEventListener('resize', onWindowResize, false);
-        function onWindowResize() {
-            if(camera) {
-                const aspect = window.innerWidth / window.innerHeight;
-                camera.left = -aspect;
-                camera.right = aspect;
-                camera.top = 1;
-                camera.bottom = -1;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            }
-        }
+        // Обработка ресайза
+        window.addEventListener('resize', () => {
+            const aspect = window.innerWidth / window.innerHeight;
+            camera.left = -aspect; camera.right = aspect;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
 
-        initFaceDetection();
+        initAR();
     </script>
 </body>
 </html>
