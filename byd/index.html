@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebAR: Примерка очков</title>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js" crossorigin="anonymous"></script>
+    <style>
+        body { margin: 0; overflow: hidden; background: #111; font-family: sans-serif; }
+        #container { position: relative; width: 100vw; height: 100vh; }
+        video, canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+        .status { position: absolute; top: 10px; left: 10px; color: white; z-index: 100; background: rgba(0,0,0,0.5); padding: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="status" id="status">Загрузка нейросети...</div>
+    <div id="container">
+        <video id="webcam" autoplay playsinline></video>
+        <canvas id="output_canvas"></canvas>
+    </div>
+
+    <script type="module">
+        import { FaceLandmarker, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js";
+
+        const video = document.getElementById("webcam");
+        const canvas = document.getElementById("output_canvas");
+        const ctx = canvas.getContext("2d");
+        const status = document.getElementById("status");
+
+        let faceLandmarker;
+        let lastVideoTime = -1;
+
+        // 1. Инициализация MediaPipe
+        async function initFaceDetection() {
+            const filesetResolver = await FilesetResolver.forVisionTasks(
+                "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/wasm"
+            );
+            faceLandmarker = await FaceLandmarker.createFromOptions(filesetResolver, {
+                baseOptions: {
+                    modelAssetPath: `https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task`,
+                    delegate: "GPU"
+                },
+                outputFaceBlendshapes: true,
+                runningMode: "VIDEO",
+                numFaces: 1
+            });
+            status.innerText = "Нейросеть готова. Примерка очков...";
+            startCamera();
+        }
+
+        // 2. Запуск камеры
+        async function startCamera() {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+            video.srcObject = stream;
+            video.addEventListener("loadeddata", predictWebcam);
+        }
+
+        // 3. Цикл распознавания и отрисовки
+        async function predictWebcam() {
+            // Подгоняем размер холста под видео
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            if (lastVideoTime !== video.currentTime) {
+                lastVideoTime = video.currentTime;
+                const results = faceLandmarker.detectForVideo(video, performance.now());
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (results.faceLandmarks && results.faceLandmarks[0]) {
+                    drawGlasses(results.faceLandmarks[0]);
+                }
+            }
+            requestAnimationFrame(predictWebcam);
+        }
+
+        // 4. Отрисовка "очков" (пока упрощенно)
+        function drawGlasses(landmarks) {
+            // Точка между глазами (переносица) - индекс 168
+            const bridge = landmarks[168];
+            // Левый край лица (висок) - индекс 234
+            const leftTemple = landmarks[234];
+            // Правый край лица (висок) - индекс 454
+            const rightTemple = landmarks[454];
+
+            const x = bridge.x * canvas.width;
+            const y = bridge.y * canvas.height;
+            
+            // Вычисляем ширину очков на основе расстояния между висками
+            const width = Math.abs(rightTemple.x - leftTemple.x) * canvas.width * 0.9;
+            const height = width * 0.4; // Пропорции очков
+
+            // Рисуем временную заглушку вместо 3D-модели
+            ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
+            ctx.beginPath();
+            // Смещение, чтобы центр очков был на переносице
+            ctx.fillRect(x - width / 2, y - height / 3, width, height / 2);
+            
+            // Рисуем "дужки" для понимания
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 5;
+            ctx.strokeRect(x - width / 2, y - height / 3, width, height / 2);
+        }
+
+        initFaceDetection();
+    </script>
+</body>
+</html>
